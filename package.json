@@ -1,0 +1,24 @@
+{
+  "name": "www",
+  "version": "1.0.0",
+  "description": "personal website",
+  "main": "app.js",
+  "dependencies": {
+    "koa": "^1.2.4",
+    "koa-router": "^5.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomasyxy/www.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomasyxy/www/issues"
+  },
+  "homepage": "https://github.com/thomasyxy/www#readme"
+}
