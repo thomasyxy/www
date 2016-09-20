@@ -19,7 +19,7 @@ for (var key in network){
   }
 }
 
-// var root = path.resolve(__dirname, '..');
+var root = path.resolve(__dirname, '..');
 
 var Config = {
   'development': {
@@ -28,7 +28,9 @@ var Config = {
     static2: '/dist',
     host: 'http://local.yinxueyuan.com',
     apiProxy: {
-      apiServer: 'http://app-server-test.yinxueyuan.com'
+      apiServer: 'http://app-server-test.yinxueyuan.com',
+      cson: path.join(root, 'configs/model.cson'),
+      mock: path.join(root, 'mock')
     }
   },
   'test': {
@@ -37,7 +39,9 @@ var Config = {
     static2: '/dist',
     host: 'http://test.yinxueyuan.com',
     apiProxy: {
-      apiServer: 'http://app-server-test.yinxueyuan.com'
+      apiServer: 'http://app-server-test.yinxueyuan.com',
+      cson: path.join(root, 'configs/model.cson'),
+      mock: path.join(root, 'mock')
     }
   },
   'production': {
@@ -46,7 +50,9 @@ var Config = {
     static2: '/dist',
     host: 'http://www.yinxueyuan.com',
     apiProxy: {
-      apiServer: 'http://app-server.yinxueyuan.com'
+      apiServer: 'http://app-server.yinxueyuan.com',
+      cson: path.join(root, 'configs/model.cson'),
+      mock: path.join(root, 'mock')
     }
   }
 };
