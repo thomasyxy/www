@@ -7,6 +7,7 @@ global.G = {
 };
 
 const koa = require('koa');
+const router = require('koa-router');
 const onerror = require('koa-onerror');
 const request = require("./utils/request");
 
@@ -41,6 +42,10 @@ onerror(app, {
 
 //路由
 app.use(require('./configs/routers')());
+
+// app.use(koajade.middleware({
+//   viewPath:
+// }))
 
 /**
  * 监听端口
