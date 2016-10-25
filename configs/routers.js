@@ -1,17 +1,17 @@
 "use strict";
 
-const Router = require('koa-router');
+const router = require('koa-router')();
 
 const ctrl = require('../controller/index');
 
 
 module.exports = function(app){
-  var router = new Router();
 
-  router.get('/', function *(next){
-    console.log(123);
-  });
+  router.get('/', ctrl.home.index);
   router.get('/yixuan/blog/getTitle', ctrl.blog.getTitle);
+
+  //fie 测试插件列表数据
+  router.get('/mockPlug', ctrl.blog.mockPlug);
 
 
   return router.middleware();

@@ -4,6 +4,7 @@ const path = require('path');
 var ctrl = {};
 
 fs.readdirSync(__dirname).filter(function(file){
+  debugger
   return (file.indexOf(".") != 0) && (file !== "index.js");
 }).forEach(function(file){
   var model = require(path.join(__dirname, file));

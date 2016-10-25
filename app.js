@@ -20,7 +20,7 @@ const app = koa();
 const isDev = (G.C.evn == 'development');
 
 //接口代理
-request(G.C.apiProxy).middleWare(app);
+// request(G.C.apiProxy).middleWare(app);
 
 //错误处理
 onerror(app, {
