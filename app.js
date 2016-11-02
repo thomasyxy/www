@@ -9,6 +9,8 @@ global.G = {
 const koa = require('koa');
 const router = require('koa-router');
 const onerror = require('koa-onerror');
+// const webpack = require('webpack');
+
 const request = require("./utils/request");
 
 
@@ -18,6 +20,7 @@ G.C = require('./configs/config');
 const app = koa();
 
 const isDev = (G.C.evn == 'development');
+const localUri = 'http://127.0.0.1';
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
@@ -50,4 +53,10 @@ app.use(require('./configs/routers')());
 /**
  * 监听端口
  */
-app.listen(G.C.port);
+module.exports = app.listen(G.C.port, (err) => {
+  if(err){
+    console.log(err)
+    return
+  }
+  console.log('listening at ' + localUri + ':' + G.C.port)
+});
