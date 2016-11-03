@@ -4,14 +4,22 @@
   "description": "personal website",
   "main": "app.js",
   "dependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.7",
     "cjson": "^0.4.0",
     "cson": "^3.0.2",
+    "html-webpack-plugin": "^2.24.1",
     "koa": "^1.2.4",
+    "koa-jade": "^2.1.0",
     "koa-onerror": "^2.0.0",
     "koa-router": "^5.4.0",
     "merge": "^1.2.0",
     "q": "^1.4.1",
-    "request": "^2.75.0"
+    "request": "^2.75.0",
+    "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.1",
+    "webpack-merge": "^0.15.0"
   },
   "devDependencies": {},
   "scripts": {
