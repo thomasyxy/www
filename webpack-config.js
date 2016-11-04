@@ -6,12 +6,12 @@ const merge = require('webpack-merge')
 const webpackConfigDev = require('./configs/webpack-config/dev')
 const webpackConfigBuild = require('./configs/webpack-config/build')
 
-console.log('dirname' + __dirname);
 const webpackConfigBase = {
   entry: {
     app: path.resolve(__dirname, './src/index.js')
   },
   output: {
+    publicPath: '/dist',
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
   },
