@@ -50,8 +50,7 @@ const app = koa()
 
 const webpackConfig =require('./webpack-config')[ isDev ? 'dev' : 'build' ]
 const compiler = webpack(webpackConfig)
-
-const devMiddleware = require('webpack-dev-middleware')(compiler, {
+const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
   publicPath: webpackConfig.output.publicPath,
   static: {
     colors: true,
@@ -59,7 +58,7 @@ const devMiddleware = require('webpack-dev-middleware')(compiler, {
   }
 })
 
-const hotMiddleware = require('webpack-hot-middleware')(compiler)
+const hotMiddleware = require('koa-webpack-hot-middleware')(compiler)
 
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
@@ -72,9 +71,9 @@ compiler.plugin('compilation', function (compilation) {
 // request(G.C.apiProxy).middleWare(app);
 
 const jade = new Jade({
-  viewPath: __dirname + "/view",
-  debug: false,
-  pretty: false,
+  viewPath: __dirname + "/views",
+  debug: isDev ? true : false,
+  pretty: isDev ? true : false,
   compileDebug: false,
   locals: {
     staticPath: G.C.staticPath
@@ -99,9 +98,9 @@ onerror(app, {
     }
 })
 
-// app.use(devMiddleware)
-//
-// app.use(hotMiddleware)
+app.use(devMiddleware)
+
+app.use(hotMiddleware)
 
 
 //路由
