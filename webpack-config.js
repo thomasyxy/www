@@ -11,7 +11,7 @@ const webpackConfigBase = {
     app: path.resolve(__dirname, './src/index.js')
   },
   output: {
-    publicPath: '/dist',
+    publicPath: path.resolve(__dirname, './static'),
     path: path.resolve(__dirname, './dist'),
     filename: 'bundle.js'
   },
