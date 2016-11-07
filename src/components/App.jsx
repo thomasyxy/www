@@ -1,6 +1,6 @@
 import React from 'react';
 
-require('./App.css');
+require('./App.scss');
 
 export default () => <h1>Hello World</h1>;
 

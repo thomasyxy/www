@@ -7,16 +7,5 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     meta(name="keywords" content="#{meta_keywords||keywords || '逸轩的博客'}")
     meta(name="description" content="#{description || '专业写Bug'}")
-    block title
-      title 逸轩的博客
-        
-    link(rel="shortcut icon" href="")
-    
-    block afterhead
-      
-  body(class="#{pageClass || ''}")
-    block content
-    
-    include ../partial/script.jade
-    
-    block afterbody
+    title 页面没有找到
+  body(class="#{pageClass || ''}") #{msg}
