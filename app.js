@@ -13,16 +13,17 @@ const Jade = require('koa-jade')
 const webpack = require('webpack')
 const os = require('os')
 const network = os.networkInterfaces()
-const path = require('path');
+const path = require('path')
+const ora = require('ora')
+const Commander = require('commander')
 // const webpack = require('webpack');
 
 const request = require("./utils/request")
 
 
 const proList = ['114.215.158.62']
-const testList = ['121.42.87.86']
 
-let evn = process.env.NODE_ENV || 'develpoment'
+let evn = process.env.NODE_ENV || 'development'
 let root = path.resolve(__dirname, '.')
 
 //环境判断
@@ -31,41 +32,88 @@ for (var key in network){
   for(var i = 0; i < ip.length; i++){
     if(proList.indexOf(ip[i].address) > -1){
       evn = 'production';
-    }else if(testList.indexOf(ip[i].address > -1)){
-      evn = 'test';
     }
   }
 }
 
-debugger
+evn = 'production'
+
+console.log(`current environment: ` + evn)
+
+
 G.C = require('./configs/config')[evn]
+
 G.C.evn = evn
 G.C.root = root
 
-const isDev = (G.C.evn == 'development')
+const isDev = function(){
+  return G.C.evn == 'development'
+}
 const localUri = 'http://127.0.0.1'
 
 
 const app = koa()
 
 const webpackConfig =require('./webpack-config')[ isDev ? 'dev' : 'prod' ]
-const compiler = webpack(webpackConfig)
-const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-  static: {
-    colors: true,
-    chunks: false
-  }
-})
 
-const hotMiddleware = require('koa-webpack-hot-middleware')(compiler)
+const BuildFn = function(){
+  var spinner = ora('building for production...')
+  spinner.start()
 
-compiler.plugin('compilation', function (compilation) {
-  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' })
-    cb()
+  var assetsPath = path.join(G.C.assetsRoot, G.C.assetsSubDirectory)
+  rm('-rf', assetsPath)
+  mkdir('-p', assetsPath)
+  cp('-R', 'static/*', assetsPath)
+
+  webpack(webpackConfig, function (err, stats) {
+    spinner.stop()
+    if (err) throw err
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n')
   })
+}
+
+const DevFn = function(){
+  const compiler = webpack(webpackConfig)
+  const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
+    publicPath: webpackConfig.output.publicPath,
+    static: {
+      colors: true,
+      chunks: false
+    }
+  })
+
+  const hotMiddleware = require('koa-webpack-hot-middleware')(compiler)
+
+  compiler.plugin('compilation', function (compilation) {
+    compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+      hotMiddleware.publish({ action: 'reload' })
+      cb()
+    })
+  })
+
+  app.use(devMiddleware)
+
+  app.use(hotMiddleware)
+}
+
+// if(isDev){
+//   DevFn()
+// }else{
+//
+// }
+process.argv.forEach(function (val, index, array) {
+  console.log(index + ': ' + val);
 })
+console.log(Commander)
+if(Commander.build){
+  console.log('building>>>>>');
+}
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
@@ -97,11 +145,6 @@ onerror(app, {
         }
     }
 })
-
-app.use(devMiddleware)
-
-app.use(hotMiddleware)
-
 
 //路由
 app.use(require('./configs/routers')())

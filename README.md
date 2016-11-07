@@ -2,6 +2,11 @@
 
 > serve for request
 
+* JS runtime environment: Node v4.4.7
+* Using Koa
+* Equip with React, ES6 & babel 6
+* Build with webpack
+
 ## Build Setup
 
 ``` bash
