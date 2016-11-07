@@ -16,14 +16,20 @@ const webpackConfigBase = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    include: path.resolve(__dirname, './src'),
+    extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [
       {
-        test: /\.js|jsx$/,
-        loaders: ['babel']
+        test: /\.js[x]?$/,
+        loader: 'babel-loader',
+        include: path.resolve(__dirname, './src'),
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, 'src'),
+        loader: 'style-loader!css-loader'
       }
     ]
   },
