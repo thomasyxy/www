@@ -48,7 +48,7 @@ const localUri = 'http://127.0.0.1'
 
 const app = koa()
 
-const webpackConfig =require('./webpack-config')[ isDev ? 'dev' : 'build' ]
+const webpackConfig =require('./webpack-config')[ isDev ? 'dev' : 'prod' ]
 const compiler = webpack(webpackConfig)
 const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -110,9 +110,9 @@ app.use(function*(next) {
     yield next
     if (404 !== this.status) return;
     this.status = 404;
-    this.body = {
-        view: '404'
-    }
+    this.render('404', {
+      msg: 'Not Found'
+    })
 })
 
 /**

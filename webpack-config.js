@@ -4,7 +4,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 
 const webpackConfigDev = require('./configs/webpack-config/dev')
-const webpackConfigBuild = require('./configs/webpack-config/build')
+const webpackConfigProd = require('./configs/webpack-config/prod')
 
 const webpackConfigBase = {
   entry: {
@@ -27,9 +27,9 @@ const webpackConfigBase = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
-        loader: 'style-loader!css-loader'
+        test: /\.scss$/,
+        loaders: ['style', 'css', 'sass'],
+        include: path.resolve(__dirname, './src')
       }
     ]
   },
@@ -40,5 +40,5 @@ const webpackConfigBase = {
 
 module.exports = {
   dev: merge(webpackConfigBase, webpackConfigDev),
-  build: merge(webpackConfigBase, webpackConfigBuild)
+  prod: merge(webpackConfigBase, webpackConfigProd)
 }
