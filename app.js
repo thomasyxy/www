@@ -5,6 +5,7 @@ global.G = {
   R: null,
   M: null
 }
+require('shelljs/global')
 
 const koa = require('koa')
 const router = require('koa-router')
@@ -16,9 +17,7 @@ const network = os.networkInterfaces()
 const path = require('path')
 const ora = require('ora')
 const Commander = require('commander')
-// const webpack = require('webpack');
-
-const request = require("./utils/request")
+const Utils = require('./utils')
 
 
 const proList = ['114.215.158.62']
@@ -36,9 +35,7 @@ for (var key in network){
   }
 }
 
-evn = 'production'
-
-console.log(`current environment: ` + evn)
+console.log(`> current environment: ` + evn)
 
 
 G.C = require('./configs/config')[evn]
@@ -54,16 +51,15 @@ const localUri = 'http://127.0.0.1'
 
 const app = koa()
 
-const webpackConfig =require('./webpack-config')[ isDev ? 'dev' : 'prod' ]
-
-const BuildFn = function(){
+const BuildStep = function(){
   var spinner = ora('building for production...')
   spinner.start()
 
-  var assetsPath = path.join(G.C.assetsRoot, G.C.assetsSubDirectory)
-  rm('-rf', assetsPath)
-  mkdir('-p', assetsPath)
-  cp('-R', 'static/*', assetsPath)
+  // var assetsPath = path.join(G.C.assetsRoot, G.C.assetsSubDirectory)
+  // console.log(assetsPath)
+  // rm('-rf', assetsPath)
+  // mkdir('-p', assetsPath)
+  // cp('-R', 'static/*', assetsPath)
 
   webpack(webpackConfig, function (err, stats) {
     spinner.stop()
@@ -78,7 +74,7 @@ const BuildFn = function(){
   })
 }
 
-const DevFn = function(){
+const DevStep = function(){
   const compiler = webpack(webpackConfig)
   const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
     publicPath: webpackConfig.output.publicPath,
@@ -102,18 +98,11 @@ const DevFn = function(){
   app.use(hotMiddleware)
 }
 
-// if(isDev){
-//   DevFn()
-// }else{
-//
-// }
-process.argv.forEach(function (val, index, array) {
-  console.log(index + ': ' + val);
-})
-console.log(Commander)
-if(Commander.build){
-  console.log('building>>>>>');
-}
+const isBuild = Utils.dataFn.hasParam('build')
+
+const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
+
+isBuild || !isDev ? BuildStep() : DevStep()
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
@@ -166,5 +155,5 @@ module.exports = app.listen(G.C.port, (err) => {
     console.log(err)
     return
   }
-  console.log('listening at ' + localUri + ':' + G.C.port)
+  console.log('> listening at ' + localUri + ':' + G.C.port)
 })

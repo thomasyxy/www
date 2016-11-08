@@ -2,7 +2,13 @@
   "name": "www",
   "version": "1.0.0",
   "description": "personal website",
-  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "dev": "node app.js",
+    "build": "node app.js build",
+    "debug": "node --debug app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.7",
@@ -28,6 +34,7 @@
     "react-dom": "^15.3.2",
     "request": "^2.75.0",
     "sass-loader": "^4.0.2",
+    "shelljs": "^0.7.5",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
@@ -38,9 +45,6 @@
     "node-sass": "^3.11.2",
     "sass-loader": "^4.0.2",
     "webpack": "^1.13.3"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
