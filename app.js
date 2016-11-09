@@ -16,7 +16,7 @@ const os = require('os')
 const network = os.networkInterfaces()
 const path = require('path')
 const ora = require('ora')
-const Commander = require('commander')
+const staticCache = require('koa-static-cache')
 const Utils = require('./utils')
 
 
@@ -106,6 +106,11 @@ isBuild || !isDev ? BuildStep() : DevStep()
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
+
+//静态资源文件
+app.use(staticCache('./dist', {
+    maxAge: 0
+}));
 
 const jade = new Jade({
   viewPath: __dirname + "/views",
