@@ -5,5 +5,5 @@ module.exports = {
     publicPath: '/static',
     path: path.resolve(__dirname, './static'),
     filename: 'js/bundle.js'
-  },
+  }
 };
