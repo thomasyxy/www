@@ -4,7 +4,11 @@ module.exports = {
   index: function *(next){
     // var data = yield this.fetch('home_data', {}, {})
     this.render('index',{
-      data: 'hello world'
+      data: {
+        evn: G.C.evn,
+        msg: 'hello world',
+        smile: ':)'
+      }
     })
     yield next
   }
