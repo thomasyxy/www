@@ -33,6 +33,7 @@
     "ora": "^0.3.0",
     "q": "^1.4.1",
     "react": "^15.3.2",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
@@ -46,7 +47,6 @@
     "webpack-merge": "^0.15.0"
   },
   "devDependencies": {
-    "amazeui-touch": "^1.0.0",
     "node-sass": "^3.11.2",
     "sass-loader": "^4.0.2",
     "webpack": "^1.13.3"
