@@ -5,7 +5,6 @@ module.exports = {
     // var data = yield this.fetch('home_data', {}, {})
     this.render('index',{
       data: {
-        evn: G.C.evn,
         msg: 'hello world',
         smile: ':)'
       }

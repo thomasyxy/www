@@ -19,6 +19,7 @@
     "copy-webpack-plugin": "^4.0.0",
     "cson": "^3.0.2",
     "css-loader": "^0.25.0",
+    "extend": "^3.0.0",
     "html-webpack-plugin": "^2.24.1",
     "koa": "^1.2.4",
     "koa-jade": "^2.1.0",
@@ -45,6 +46,7 @@
     "webpack-merge": "^0.15.0"
   },
   "devDependencies": {
+    "amazeui-touch": "^1.0.0",
     "node-sass": "^3.11.2",
     "sass-loader": "^4.0.2",
     "webpack": "^1.13.3"
