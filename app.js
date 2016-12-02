@@ -108,7 +108,7 @@ isBuild || !isDev ? BuildStep() : DevStep()
 // request(G.C.apiProxy).middleWare(app);
 
 //静态资源文件
-app.use(staticCache('./dist', {
+app.use(staticCache('./public', {
     maxAge: 0
 }));
 

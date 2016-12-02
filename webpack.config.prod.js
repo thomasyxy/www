@@ -5,8 +5,8 @@ const path = require('path')
 module.exports = {
   devtool: 'cheap-source-map',
   output: {
-    publicPath: '/dist',
-    path: path.resolve(__dirname, './dist'),
+    publicPath: '/public',
+    path: path.resolve(__dirname, './public'),
     filename: 'static/js/bundle.js'
   },
   plugins: [
