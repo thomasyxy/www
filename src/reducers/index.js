@@ -4,8 +4,7 @@ import Utils from '../utils'
 const INIT_PAGE_DATA = MainConstants.INIT_PAGE_DATA;
 
 let initState = {
-  text: '你好',
-  name: 'yixuan'
+  navData: null
 }
 
 export default function dataLoadReducer(state = initState, action) {
@@ -19,6 +18,6 @@ export default function dataLoadReducer(state = initState, action) {
 
 function loadInitData(state, action) {
     let nextState = Utils.extend(true, {}, state);
-    nextState.detailData = [action.result];
+    nextState.navData = [action.result];
     return nextState;
 }

@@ -10,5 +10,19 @@ module.exports = {
       }
     })
     yield next
+  },
+
+  initData: function *(next){
+    this.body = {
+      navlist: [
+        {
+          a: 1
+        },
+        {
+          b: 2
+        }
+      ]
+    }
+    yield next
   }
 }
