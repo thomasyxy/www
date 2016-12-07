@@ -38,6 +38,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "request": "^2.75.0",
+    "reqwest": "^2.0.5",
     "sass-loader": "^4.0.2",
     "shelljs": "^0.7.5",
     "style-loader": "^0.13.1",
