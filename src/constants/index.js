@@ -1,1 +1,0 @@
-export const INIT_PAGE_DATA = 'INIT_PAGE_DATA'
