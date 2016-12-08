@@ -1,6 +1,35 @@
 import extend from 'extend';
 
-export default {
+var Utils =  {
+  fetch: function(params, success = () => {}, error = () => {}) {
+    if(!params.api || !API[params.api]){
+      return
+    }
+
+    if(this.isLocal()){
+      params.api = API[params.api]['local'];
+      fetchMock(params, success, error);
+    }else{
+
+    }
+  },
+  fetchMock: (params, success, error) => {
+    reqwest({
+      url: params.api,
+      type: params.type || 'json',
+      method: params.method || 'get',
+      success: (res) => {
+        if(res.success === true){
+          success && success(res.data);
+        }else{
+          params.err && params.err(res.message || '接口调用出错');
+        }
+      },
+      error: () => {
+        error && error('接口调用异常');
+      }
+    });
+  },
   extend: (...args) => {
     return extend.apply(null, args);
   },
@@ -11,5 +40,14 @@ export default {
   getUrlParam: (name) => {
     const params = QueryString.parse(localion.search);
     return typeof name === 'undefined' ? undefined : params[name];
-  }
+  },
+  nameSpace: function(name) {
+    return function(v) {
+      return name + '-' + v;
+    };
+  },
 }
+
+export const fetch = Utils.fetch.bind(Utils);
+export const nameSpace = Utils.nameSpace.bind(Utils);
+export default Utils;
