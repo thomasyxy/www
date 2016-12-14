@@ -2,17 +2,20 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+
 import * as actions from '../../actions/index';
 import './index.scss';
 
-class List extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: true
     };
     this.handleClick = this.handleClick.bind(this);
+    this._renderPage = this._renderPage.bind(this);
   }
+
   handleClick() {
     const { dispatch, counter } = this.props;
     if (this.loading) {
@@ -32,19 +35,21 @@ class List extends React.Component {
       });
     }));
   }
+
+  _renderPage() {
+    const {
+      loading
+    } = this.state;
+
+    return loading ? 'loading' : 'loading success'
+  }
+
   render() {
     const list = this.props.list;
     return (
-      <div className="list-page">
-        <p>success</p>
-        <p>
-          {this.state.loading ? <span className="loading-text">加载中...</span> : ''}
-        </p>
-        <p>
-          {list.map((item, index) => {
-            return <span className="result" key={index}>{item}</span>;
-          })}
-        </p>
+      <div className="main-page">
+        { this._renderPage() }
+        <p>home</p>
       </div>
     );
   }
@@ -54,4 +59,4 @@ class List extends React.Component {
 // map state to props
 export default connect((state) => {
   return state;
-})(List);
+})(App);
