@@ -4,36 +4,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions/index';
+import { fetch } from '../../../utils/';
 import './index.scss';
+
+import Header from '../parts/header';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: false
     };
-    this.handleClick = this.handleClick.bind(this);
     this._renderPage = this._renderPage.bind(this);
   }
 
-  handleClick() {
-    const { dispatch, counter } = this.props;
-    if (this.loading) {
-      return false;
-    }
+  componentWillMount() {
+    this.loadInitData();
+  }
 
-    this.setState({
-      loading: true
-    });
-    dispatch(actions.getList(counter + 1, () => {
+  loadInitData() {
+    fetch({
+      api: 'GET_INIT_DATA'
+    }, (res) => {
       this.setState({
-        loading: false
-      });
-    }, (json) => {
-      this.setState({
-        loading: false
-      });
-    }));
+        initData: res,
+        loading: true
+      })
+    })
   }
 
   _renderPage() {
@@ -41,7 +38,11 @@ class App extends React.Component {
       loading
     } = this.state;
 
-    return loading ? 'loading' : 'loading success'
+    return loading ? <Header /> : this.renderLoading()
+  }
+
+  renderLoading() {
+    return <div>loading...</div>
   }
 
   render() {
@@ -49,7 +50,6 @@ class App extends React.Component {
     return (
       <div className="main-page">
         { this._renderPage() }
-        <p>home</p>
       </div>
     );
   }

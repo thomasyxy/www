@@ -4,7 +4,7 @@ import * as actions from '../actions/index';
 
 // 对页面prop 数据进行管理
 const initialState = {
-  navData: null,
+  initData: null,
   list: [],
   counter: 0
 };

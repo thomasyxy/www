@@ -12,7 +12,7 @@ module.exports = {
     yield next
   },
 
-  initData: function *(next){
+  getInitData: function *(next){
     this.body = {
       navlist: [
         {
