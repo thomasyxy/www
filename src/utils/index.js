@@ -1,4 +1,7 @@
 import extend from 'extend';
+import reqwest from 'reqwest';
+
+import API from './api';
 
 var Utils =  {
   fetch: function(params, success = () => {}, error = () => {}) {
@@ -8,7 +11,7 @@ var Utils =  {
 
     if(this.isLocal()){
       params.api = API[params.api]['local'];
-      fetchMock(params, success, error);
+      this.fetchMock(params, success, error);
     }else{
 
     }

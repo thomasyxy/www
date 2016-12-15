@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Navbar } from 'react-bootstrap';
 
-require('./App.scss');
+require('./index.scss');
 
 
 

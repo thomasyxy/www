@@ -2,13 +2,13 @@
 
 // 测试接口
 const DEFAULT = {
-  local: '../data/default.json',
+  local: '/mock/data/default.json',
   type: 'GET'
 }
 
-const YX_THINK_INIT_DATA = {
-  local: '../data/main-init-data.json',
-  url: '/home/get_init_data',
+const GET_INIT_DATA = {
+  local: '/mock/data/mock-init-data.json',
+  url: '/home/getInitData',
   type: 'GET'
 }
 
@@ -18,5 +18,5 @@ const YX_THINK_INIT_DATA = {
 
 export default {
     DEFAULT,
-    YX_THINK_INIT_DATA
+    GET_INIT_DATA
 };
