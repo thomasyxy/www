@@ -8,12 +8,15 @@ import { ajax } from '../../../utils';
 import './index.scss';
 
 import Header from '../parts/header';
+import Preload from '../components/preload';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      Preloading: false,
+      waitTime: 4000
     };
     this._renderPage = this._renderPage.bind(this);
   }
@@ -23,27 +26,42 @@ class App extends React.Component {
   }
 
   loadInitData() {
+    const {
+      waitTime
+    } = this.state;
+    let startPos = Date.now();
     ajax({
       api: 'GET_INIT_DATA'
     }, (res) => {
       this.setState({
-        initData: res,
-        loading: true
-      })
+        initData: res
+      });
+      let endPos = Date.now();
+      let during = endPos - startPos;
+      let delay = during >= waitTime ? 0 : waitTime - during;
+      this.waitPreloadPlay(delay);
     })
+  }
+
+  waitPreloadPlay(delay) {
+    setTimeout(() => {
+      this.setState({
+        Preloading: true
+      })
+    },delay)
   }
 
   _renderPage() {
     const {
-      loading,
+      Preloading,
       initData
     } = this.state;
 
-    return loading && initData ? <Header navData={initData.navData} /> : this.renderLoading()
+    return Preloading && initData ? <Header navData={initData.navData} /> : this.renderLoading()
   }
 
   renderLoading() {
-    return <div>loading...</div>
+    return <Preload />
   }
 
   render() {
