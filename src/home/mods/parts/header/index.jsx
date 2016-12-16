@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Navbar } from 'react-bootstrap';
+import Topbar from '../../components/top-bar';
 
 require('./index.scss');
 
@@ -12,10 +12,10 @@ export default class Header extends React.Component {
     super(props);
   }
 
-  renderNavbar(list){
+  renderTopbar(navData){
     return (
       <div>
-        header
+        <Topbar navData={navData}/>
       </div>
     )
   }
@@ -27,7 +27,7 @@ export default class Header extends React.Component {
 
     return (
       <div className="top-container">
-        { navData ? this.renderNavbar(navData) : '' }
+        { navData ? this.renderTopbar(navData) : '' }
       </div>
     );
   }

@@ -35,10 +35,11 @@ class App extends React.Component {
 
   _renderPage() {
     const {
-      loading
+      loading,
+      initData
     } = this.state;
 
-    return loading ? <Header /> : this.renderLoading()
+    return loading && initData ? <Header navData={initData.navData} /> : this.renderLoading()
   }
 
   renderLoading() {
