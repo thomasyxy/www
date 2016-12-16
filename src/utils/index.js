@@ -1,5 +1,6 @@
 import extend from 'extend';
 import reqwest from 'reqwest';
+import Fetch from 'whatwg-fetch';
 
 import API from './api';
 
@@ -13,7 +14,8 @@ var Utils =  {
       params.api = API[params.api]['local'];
       this.fetchMock(params, success, error);
     }else{
-
+      params.api = API[params.api]['url'];
+      this.fetchData(params, success, error);
     }
   },
   fetchMock: (params, success, error) => {
@@ -32,6 +34,18 @@ var Utils =  {
         error && error('接口调用异常');
       }
     });
+  },
+  fetchData: (params, success, error) => {
+    Fetch(params.api, {
+      method: params.method || 'GET',
+      body: params.data || null
+    }).then((res) => {
+      if(res.success === true){
+        success && success(res.data);
+      }else{
+        params.err && params.err(res.message || '接口调用出错');
+      }
+    })
   },
   extend: (...args) => {
     return extend.apply(null, args);

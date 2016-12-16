@@ -2,13 +2,15 @@
   "success": true,
   "message": 0,
   "data": {
-    "navlist": [
-      {
-        "a": 1
-      },
-      {
-        "b": 2
-      }
-    ]
+    "navData": {
+      "list" : [
+        {
+          "a": 1
+        },
+        {
+          "b": 2
+        }
+      ]
+    }
   }
 }

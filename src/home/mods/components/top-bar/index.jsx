@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 require('./index.scss');
 
@@ -13,6 +13,10 @@ export default class TopBar extends React.Component {
   }
 
   renderNavbar(list){
+    const {
+      navData
+    } = this.props;
+
     return (
       <Navbar inverse collapseOnSelect>
         <Navbar.Header>
