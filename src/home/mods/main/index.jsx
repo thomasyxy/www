@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions/index';
-import { fetch } from '../../../utils/';
+import { ajax } from '../../../utils';
 import './index.scss';
 
 import Header from '../parts/header';
@@ -23,7 +23,7 @@ class App extends React.Component {
   }
 
   loadInitData() {
-    fetch({
+    ajax({
       api: 'GET_INIT_DATA'
     }, (res) => {
       this.setState({

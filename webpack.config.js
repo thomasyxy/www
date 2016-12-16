@@ -27,10 +27,7 @@ const webpackConfigBase = {
         include: path.resolve(__dirname, './src')
       }
     ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  }
 }
 
 module.exports = {
