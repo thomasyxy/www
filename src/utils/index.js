@@ -1,16 +1,16 @@
 import extend from 'extend';
 import reqwest from 'reqwest';
-import Fetch from 'whatwg-fetch';
+import 'whatwg-fetch';
 
 import API from './api';
 
 var Utils =  {
-  fetch: function(params, success = () => {}, error = () => {}) {
+  ajax: function(params, success = () => {}, error = () => {}) {
     if(!params.api || !API[params.api]){
       return
     }
 
-    if(this.isLocal()){
+    if(!this.isLocal()){
       params.api = API[params.api]['local'];
       this.fetchMock(params, success, error);
     }else{
@@ -36,16 +36,23 @@ var Utils =  {
     });
   },
   fetchData: (params, success, error) => {
-    Fetch(params.api, {
+    fetch(params.api,{
       method: params.method || 'GET',
       body: params.data || null
-    }).then((res) => {
-      if(res.success === true){
-        success && success(res.data);
-      }else{
-        params.err && params.err(res.message || '接口调用出错');
+    }).then(
+      (res) =>  {
+        res.json().then(function(res) {
+          if(res.success === true){
+            success && success(res.data);
+          }else{
+            params.err && params.err(res.message || '接口调用出错');
+          }
+        })
+      },
+      () => {
+        error && error('接口调用异常');
       }
-    })
+    )
   },
   extend: (...args) => {
     return extend.apply(null, args);
@@ -65,6 +72,6 @@ var Utils =  {
   },
 }
 
-export const fetch = Utils.fetch.bind(Utils);
+export const ajax = Utils.ajax.bind(Utils);
 export const nameSpace = Utils.nameSpace.bind(Utils);
 export default Utils;
