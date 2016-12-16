@@ -18,7 +18,7 @@ export default class TopBar extends React.Component {
     } = this.props;
 
     return (
-      <Navbar inverse collapseOnSelect>
+      <Navbar default collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <a href="#">React-Bootstrap</a>
