@@ -14,15 +14,22 @@ module.exports = {
 
   getInitData: function *(next){
     this.body = {
-      navlist: [
-        {
-          a: 1
-        },
-        {
-          b: 2
+      "success": true,
+      "message": 0,
+      "data": {
+        "navData": {
+          "list" : [
+            {
+              "a": 1
+            },
+            {
+              "b": 2
+            }
+          ]
         }
-      ]
+      }
     }
+
     yield next
   }
 }

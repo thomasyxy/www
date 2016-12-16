@@ -9,6 +9,7 @@ module.exports = {
     filename: 'js/bundle.js'
   },
   plugins: [
-    new webpack.SourceMapDevToolPlugin({})
+    new webpack.SourceMapDevToolPlugin({}),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
