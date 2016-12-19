@@ -11,3 +11,21 @@
     margin-left: 15px;
   }
 }
+
+
+.preload-enter {
+  opacity: 0.01;
+}
+
+.preload-enter.preload-enter-active {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.preload-leave {
+  opacity: 1;
+}
+.preload-leave.preload-leave-active {
+  opacity: 0.01;
+  transition: opacity 0.5s ease-in;
+}
