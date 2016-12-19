@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
 import * as actions from '../../actions/index';
 import { ajax } from '../../../utils';
@@ -48,7 +49,7 @@ class App extends React.Component {
       this.setState({
         Preloading: true
       })
-    },delay)
+    }, delay)
   }
 
   _renderPage() {
@@ -57,11 +58,21 @@ class App extends React.Component {
       initData
     } = this.state;
 
-    return Preloading && initData ? <Header navData={initData.navData} /> : this.renderLoading()
+    return (
+      <div>
+        <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+        {
+          Preloading && initData ? <Header navData={initData.navData} key={1} /> : this.renderPreloading()
+        }
+        </ReactCSSTransitionGroup>
+      </div>
+    )
   }
 
-  renderLoading() {
-    return <Preload />
+  renderPreloading() {
+    return (
+        <Preload key={2} />
+    )
   }
 
   render() {

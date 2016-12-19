@@ -4,6 +4,8 @@
   $color-yellow-base:	#c7c8a8;
   $color-yellow-light:	#e8ddcb;
 
+  height: 100%;
+
   @mixin size($w, $h) {
   	width: $w;
   	height: $h;
