@@ -14,7 +14,7 @@ export default class Header extends React.Component {
 
   renderTopbar(navData){
     return (
-      <div>
+      <div className="top-bar">
         <Topbar navData={navData}/>
       </div>
     )
@@ -26,7 +26,7 @@ export default class Header extends React.Component {
     } = this.props;
 
     return (
-      <div className="top-container">
+      <div className="header-container">
         { navData ? this.renderTopbar(navData) : '' }
       </div>
     );

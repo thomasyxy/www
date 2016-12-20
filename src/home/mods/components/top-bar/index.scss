@@ -1,5 +1,84 @@
 .top-container{
+  position: relative;
+  color: #fff;
   .navbar{
     border-radius: 0;
+    background: #db4437;
+    padding: 0 0 0 8px;
+    overflow: visible;
+    z-index: 2;
+    margin-bottom: 0;
+    .container{
+      display: flex;
+      height: 64px;
+      align-items: center;
+      flex-direction: row;
+      position: relative;
+    }
+    .navbar-nav{
+      li{
+        a{
+          color: #fff;
+        }
+      }
+    }
+  }
+  .top-menu-btn{
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .navbar-header{
+    display: flex;
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
+    align-items: center;
+    box-flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-left: 12px;
+    .top-line{
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+      margin: auto 0;
+      line-height: 48px;
+      color: #fff;
+      .top-title{
+        display: inline;
+        background-image: url(//img.alicdn.com/tps/TB1wu06OVXXXXbQXXXXXXXXXXXX-563-206.png);
+        width: 88px;
+        height: 24px;
+        background-size: 88px 24px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        margin: auto;
+        cursor: pointer;
+      }
+      .top-cur-pos{
+        display: inline;
+        line-height: 19px;
+        border-left: 1px solid rgba(255,255,255,0.2);
+        padding-left: 24px;
+        margin-left: 24px;
+        font-size: 20px;
+      }
+      &:hover{
+        color: #fff;
+      }
+    }
+  }
+  .top-info{
+    width: 50px;
+    flex-shrink: 0;
+  }
+  .navbar-toggle{
+    display: none;
+  }
+  .test{
+    width: 100%;
+    background: blue;
   }
 }
