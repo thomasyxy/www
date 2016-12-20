@@ -22,15 +22,10 @@ const webpackConfigBase = {
         exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
+        test: /\.scss|.css$/,
         loaders: ['style', 'css', 'sass'],
-        include: path.resolve(__dirname, './src'),
+        include: [path.resolve(__dirname, './src'), path.resolve(__dirname, './node_modules')],
         exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css', 'sass'],
-        include: path.resolve(__dirname, './node_modules')
       }
     ]
   }

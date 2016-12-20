@@ -16,7 +16,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      Preloading: true,
+      Preloading: false,
       waitTime: 4000
     };
     this._renderPage = this._renderPage.bind(this);
