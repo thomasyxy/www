@@ -12,7 +12,10 @@ export default class TopBar extends React.Component {
     super(props);
   }
 
-  renderNavbar(list){
+  componentWillMount() {
+  }
+
+  renderNavbar(list) {
     return (
       <Navbar className="" default collapseOnSelect>
         <div className="top-menu-btn">aaa</div>
@@ -44,14 +47,13 @@ export default class TopBar extends React.Component {
   }
 
   render() {
-    let {
-      navData
+    const {
+      navData,
     } = this.props;
 
     return (
       <div className="top-container">
         { navData ? this.renderNavbar(navData) : '' }
-        <div className="test">213</div>
       </div>
     );
   }
