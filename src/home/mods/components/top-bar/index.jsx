@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem, PanelGroup, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import Utils from '../../../../utils';
 
 require('./index.scss');
 
@@ -10,40 +11,78 @@ require('./index.scss');
 export default class TopBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeKey: '1'
+    };
+    this._renderNavbar = this._renderNavbar.bind(this);
+    this._renderSubList = this._renderSubList.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentWillMount() {
   }
 
-  renderNavbar(list) {
+  handleSelect(activeKey) {
+    this.setState({ activeKey });
+  }
+
+  _renderNavbar(navData) {
     return (
-      <Navbar className="" default collapseOnSelect>
+      <Navbar default collapseOnSelect>
         <div className="top-menu-btn">aaa</div>
         <Navbar.Header>
           <Navbar.Brand>
             <div className="top-line">
-              <a className="top-title" href="./"></a>
+              <a className="top-title" href="./" rel="noopener"></a>
               <div className="top-cur-pos">首页</div>
             </div>
           </Navbar.Brand>
-          <Navbar.Toggle />
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href="#">博客</NavItem>
-              <NavItem eventKey={2} href="#">github</NavItem>
-              <NavDropdown eventKey={3} title="实验室" id="basic-nav-dropdown">
-                <MenuItem eventKey={3.1}>Action</MenuItem>
-                <MenuItem eventKey={3.2}>Another action</MenuItem>
-                <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey={3.3}>Separated link</MenuItem>
-              </NavDropdown>
+              {
+                navData.list.length !== 0 ? navData.list.map((item, key) =>
+                  item.subList ? this._renderDropList(item, key) : (
+                    <NavItem key={key} eventKey={key} href={item.url}>
+                      {item.title}
+                    </NavItem>
+                  )
+                ) : ''
+              }
             </Nav>
           </Navbar.Collapse>
         </Navbar.Header>
         <div className="top-info">33333</div>
       </Navbar>
     )
+  }
+
+  _renderDropList(item, key){
+    return (
+      <NavDropdown key={key} eventKey={key} title={item.title} id="basic-nav-dropdown">
+        <PanelGroup activeKey={this.state.activeKey} onSelect={this.handleSelect} accordion>
+        {
+          item.subList.length !== 0 ? item.subList.map((subItem, subKey) =>
+            <Panel collapsible defaultExpanded key={subKey} header={subItem.title} eventKey={subKey}>
+              <ListGroup fill onClick={ () => { this.handleClickItem(subItem.url) }}>
+                {
+                  subItem.typeList.length !== 0 ? subItem.typeList.map((terItem, terKey) =>
+                    <ListGroupItem key={terKey} onClick={ () => { this.handleClickItem(terItem.url) }}>
+                      {terItem.title}
+                    </ListGroupItem>
+                  ) : ''
+                }
+              </ListGroup>
+            </Panel>
+          ) : ''
+        }
+        </PanelGroup>
+      </NavDropdown>
+    )
+  }
+
+  handleClickItem(url) {
+    Utils.open(url, true);
+    console.log(`Alert from menu item.\neventKey: ${eventKey}`);
   }
 
   render() {
@@ -53,7 +92,7 @@ export default class TopBar extends React.Component {
 
     return (
       <div className="top-container">
-        { navData ? this.renderNavbar(navData) : '' }
+        { navData.list ? this._renderNavbar(navData) : '' }
       </div>
     );
   }
