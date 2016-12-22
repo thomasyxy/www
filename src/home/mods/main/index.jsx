@@ -52,35 +52,34 @@ class App extends React.Component {
     }, delay)
   }
 
-  _renderPage() {
-    const {
-      Preloading,
-      initData
-    } = this.state;
-
+  _renderPage(initData) {
     return (
-      <div>
-        <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+      <div className="main-page" key={1}>
         {
-          Preloading && initData ? <Header navData={initData.navData} key={1} /> : this.renderPreloading()
+          initData.navData ? <Header navData={initData.navData} /> : ''
         }
-        </ReactCSSTransitionGroup>
       </div>
     )
   }
 
   renderPreloading() {
     return (
-        <Preload key={2} />
+        <Preload key={1} />
     )
   }
 
   render() {
     const list = this.props.list;
+      const {
+        Preloading,
+        initData
+      } = this.state;
     return (
-      <div className="main-page">
-        { this._renderPage() }
-      </div>
+      <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+        <div className="main-page">
+          { Preloading && initData ? this._renderPage(initData) : this.renderPreloading() }
+        </div>
+      </ReactCSSTransitionGroup>
     );
   }
 }

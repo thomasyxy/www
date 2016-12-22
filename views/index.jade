@@ -1,4 +1,9 @@
 extends ./template/layout.jade
 
+block afterhead
+  link(rel="stylesheet" href="/static/css/bootstrap.min.css")
 block content
-    div#container
+  div#container
+block afterbody
+  script(src="/static/js/bundle.js")
+  
