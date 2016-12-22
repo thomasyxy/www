@@ -3,9 +3,11 @@ html
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
-    meta(name="renderer" content="webkit")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="referrer" content="origin")
+    meta(name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui")
+    meta(name="mobile-web-app-capable" content="yes")
     meta(name="keywords" content="#{meta_keywords||keywords || '逸轩的博客'}")
     meta(name="description" content="#{description || '专业写Bug'}")
     title 页面没有找到
-  body(class="#{pageClass || ''}") #{msg}
+  body(class="#{pageClass || ''}") 
+    div #{msg}
