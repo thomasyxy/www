@@ -69,15 +69,18 @@
         color: #fff;
       }
     }
+    .dropdown-menu{
+      li{
+        a{
+          color: #333;
+        }
+      }
+    }
   }
   .top-info{
     flex-shrink: 0;
   }
   .navbar-toggle{
     display: none;
-  }
-  .test{
-    width: 100%;
-    background: blue;
   }
 }

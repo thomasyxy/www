@@ -10,7 +10,7 @@ var Utils =  {
       return
     }
 
-    if(!this.isLocal()){
+    if(this.isLocal()){
       params.api = API[params.api]['local'];
       this.fetchMock(params, success, error);
     }else{
@@ -70,6 +70,14 @@ var Utils =  {
       return name + '-' + v;
     };
   },
+  open: function(url, bol) {
+    if(bol){
+      window.open(url);
+      window.opener=null;
+    }else{
+      window.location.href = url;
+    }
+  }
 }
 
 export const ajax = Utils.ajax.bind(Utils);
