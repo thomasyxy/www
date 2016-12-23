@@ -73,7 +73,6 @@ var Utils =  {
   open: function(url, bol) {
     if(bol){
       window.open(url);
-      window.opener=null;
     }else{
       window.location.href = url;
     }

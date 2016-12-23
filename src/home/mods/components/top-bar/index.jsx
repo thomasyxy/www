@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, PanelGroup, Panel, ListGroup, ListGroupItem, DropdownButton, Clearfix } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, PanelGroup, Panel, ListGroup, ListGroupItem, Clearfix } from 'react-bootstrap';
 import Utils from '../../../../utils';
 
 require('./index.scss');
@@ -48,7 +48,7 @@ export default class TopBar extends React.Component {
                       }
                     </NavDropdown>
                   ) : (
-                    <NavItem key={key} href={item.url}>
+                    <NavItem key={key} onClick={() => { Utils.open(item.url) }}>
                       {item.title}
                     </NavItem>
                   )
@@ -72,7 +72,7 @@ export default class TopBar extends React.Component {
               <ListGroup fill onClick={ () => { this.handleClickItem(subItem.url) }}>
                 {
                   subItem.typeList.length !== 0 ? subItem.typeList.map((terItem, terKey) =>
-                    <ListGroupItem key={terKey} onClick={ () => { this.handleClickItem(terItem.url) }}>
+                    <ListGroupItem key={terKey} onClick={ () => { Utils.open(terItem.url, true) }}>
                       {terItem.title}
                     </ListGroupItem>
                   ) : ''
@@ -84,10 +84,6 @@ export default class TopBar extends React.Component {
         </PanelGroup>
       </Clearfix>
     )
-  }
-
-  handleClickItem(url) {
-    window.open(url, true);
   }
 
   render() {
