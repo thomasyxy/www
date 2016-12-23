@@ -69,11 +69,26 @@
         color: #fff;
       }
     }
-    .dropdown-menu{
-      li{
+    .open{
+      .dropdown-toggle{
+        color: #333;
+      }
+    }
+    .panel-default{
+      border: none;
+      .panel-heading{
+        background-color: #555;
+        padding: 0;
         a{
-          color: #333;
+          display: block;
+          text-align: center;
+          width: 100%;
+          cursor: pointer;
+          line-height: 25px;
         }
+      }
+      .list-group-item{
+        padding: 5px 10px;
       }
     }
   }
