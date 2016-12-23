@@ -8,3 +8,12 @@ body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
+
+@font-face {
+  font-family: 'iconfont';  /* project id 208248 */
+  src: url('//at.alicdn.com/t/font_2a9js9e08vgyzaor.eot');
+  src: url('//at.alicdn.com/t/font_2a9js9e08vgyzaor.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2a9js9e08vgyzaor.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2a9js9e08vgyzaor.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2a9js9e08vgyzaor.svg#iconfont') format('svg');
+}

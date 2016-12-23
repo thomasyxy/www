@@ -74,10 +74,13 @@
         color: #333;
       }
     }
+    .panel-group{
+      margin-bottom: 0;
+    }
     .panel-default{
       border: none;
       .panel-heading{
-        background-color: #555;
+        background-color: #464552;
         padding: 0;
         a{
           display: block;

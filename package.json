@@ -20,6 +20,7 @@
     "cson": "^3.0.2",
     "css-loader": "^0.25.0",
     "extend": "^3.0.0",
+    "fit-menu": "^3.0.72",
     "html-webpack-plugin": "^2.24.1",
     "koa": "^1.2.4",
     "koa-jade": "^2.1.0",
