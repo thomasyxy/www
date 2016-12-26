@@ -17,9 +17,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Preloading: true,
-      waitTime: 4000
+      initData: {},
+      preloading: false
     };
+
+    this.loadInitData = this.loadInitData.bind(this);
     this.loadContentData = this.loadContentData.bind(this);
     this._renderPage = this._renderPage.bind(this);
   }
@@ -31,7 +33,7 @@ class App extends React.Component {
   loadInitData() {
     const {
       waitTime
-    } = this.state;
+    } = this.props;
     let startPos = Date.now();
     ajax({
       api: 'GET_INIT_DATA'
@@ -47,7 +49,6 @@ class App extends React.Component {
   }
 
   loadContentData(page) {
-    console.log(1)
     const {
       getArticleList
     } = this.props;
@@ -60,24 +61,26 @@ class App extends React.Component {
   waitPreloadPlay(delay) {
     setTimeout(() => {
       this.setState({
-        Preloading: true
+        preloading: true
       })
     }, delay)
   }
 
   _renderPage(initData) {
     const {
-      curPage
+      curPage,
+      essayList
     } = this.props;
 
     return (
-      <div className="main-page" key={1}>
+      <div className="main-page" key={2}>
         {
           initData.navData ? <Header navData={initData.navData} /> : ''
         }
         <Content
           loadContentData={this.loadContentData}
           curPage={curPage}
+          essayList={essayList}
         />
       </div>
     )
@@ -90,15 +93,14 @@ class App extends React.Component {
   }
 
   render() {
-    const list = this.props.list;
     const {
-      Preloading,
-      initData
+      initData,
+      preloading
     } = this.state;
 
     return (
-      <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
-          { Preloading && initData ? this._renderPage(initData) : this.renderPreloading() }
+      <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+          { preloading && initData.navData ? this._renderPage(initData) : this.renderPreloading() }
       </ReactCSSTransitionGroup>
     );
   }

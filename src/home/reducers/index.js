@@ -4,10 +4,10 @@ import * as actions from '../actions/index';
 
 // 对页面prop 数据进行管理
 const initialState = {
-  initData: null,
+  waitTime: 4000,
   essayList: [],
   curPage: 0,
-  loading: false
+  pageloading: false
 };
 const defaultAction = {
   type: 'doNothing'
