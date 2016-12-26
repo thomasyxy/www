@@ -18,9 +18,8 @@ export function getArticleList(params, suc, err) {
           data: res.data
         }
       });
-      suc(res);
     }, (res) => {
-      err(res);
+      console.log(res);
     });
   };
 }
