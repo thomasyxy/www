@@ -13,7 +13,12 @@ export default class Content extends React.Component {
   }
 
   componentWillMount() {
+    const {
+      loadContentData,
+      curPage
+    } = this.props;
 
+    loadContentData(curPage)
   }
 
   renderTopbar(navData){
