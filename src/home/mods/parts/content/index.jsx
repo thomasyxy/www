@@ -31,7 +31,8 @@ export default class Content extends React.Component {
 
   render() {
     const {
-      navData
+      navData,
+
     } = this.props;
 
     return (
