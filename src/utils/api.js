@@ -12,11 +12,18 @@ const GET_INIT_DATA = {
   type: 'GET'
 }
 
+const GET_ARTICLE_LIST = {
+  local: '/mock/data/article-list.json',
+  url: '/home/getArticleList',
+  type: 'GET'
+}
+
 
 
 
 
 export default {
     DEFAULT,
-    GET_INIT_DATA
+    GET_INIT_DATA,
+    GET_ARTICLE_LIST
 };

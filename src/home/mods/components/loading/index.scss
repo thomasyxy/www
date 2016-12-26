@@ -1,0 +1,308 @@
+.preload-page{
+  $color-green-base: 	#033649;
+  $color-green-light: 	#84af9b;
+  $color-yellow-base:	#c7c8a8;
+  $color-yellow-light:	#e8ddcb;
+
+  height: 100%;
+
+  @mixin size($w, $h) {
+  	width: $w;
+  	height: $h;
+  }
+  @mixin transform($transforms) {
+  	-webkit-transform: $transforms;
+  	-moz-transform: $transforms;
+  	-ms-transform: $transforms;
+  	-o-transform: $transforms;
+  	transform: $transforms;
+  }
+  @mixin transform-origin($value: 50% 50%) {
+  	-webkit-transform-origin: $value;
+  	-moz-transform-origin: $value;
+  	-ms-transform-origin: $value;
+  	-o-transform-origin: $value;
+  	transform-origin: $value;
+  }
+
+  @mixin keyframes($name) {
+  	@-webkit-keyframes #{$name} { @content };
+  	@-moz-keyframes #{$name} {  @content };
+  	@-o-keyframes #{$name} { @content };
+  	@keyframes #{$name} { @content };
+  }
+
+  @mixin animation($name, $duration: 1s, $ease: linear, $delay: 0s, $repeat: infinite, $plus: null) {
+  	@if $plus != null {
+  		-webkit-animation: $name $duration $ease $delay $repeat both, $plus;
+  		-moz-animation: $name $duration $ease $delay $repeat both, $plus;
+  		-ms-animation: $name $duration $ease $delay $repeat both, $plus;
+  		-o-animation: $name $duration $ease $delay $repeat both, $plus;
+  		animation: $name $duration $ease $delay $repeat both, $plus;
+  	} @else {
+  		-webkit-animation: $name $duration $ease $delay $repeat;
+  		-moz-animation: $name $duration $ease $delay $repeat;
+  		-ms-animation: $name $duration $ease $delay $repeat;
+  		-o-animation: $name $duration $ease $delay $repeat;
+  		animation: $name $duration $ease $delay $repeat;
+  	}
+  }
+
+  $top-ball-def-deg: 90deg;
+  $top-plus-deg: 15deg;
+  $bot-ball-def-deg: 270deg;
+  $ball-duration: 3s;
+  $ball-deg-margin: 2deg;
+
+  @include keyframes(ball-top) {
+  	0% {
+  		@include transform(rotate($top-ball-def-deg));
+  	}
+
+  	25% {
+  		$top-ball-step-1: $top-ball-def-deg - 90 - $top-plus-deg + $ball-deg-margin;
+  		@include transform(rotate($top-ball-step-1));
+  	}
+
+  	75% {
+  		$top-ball-step-2: $top-ball-def-deg + 90 + $top-plus-deg - $ball-deg-margin;
+  		@include transform(rotate($top-ball-step-2));
+  	}
+
+  	100% {
+  		@include transform(rotate($top-ball-def-deg));
+  	}
+  }
+
+  @include keyframes(ball-bot) {
+  	0% {
+  		@include transform(rotate($bot-ball-def-deg));
+  	}
+
+  	25% {
+  		$bot-ball-step-1: $bot-ball-def-deg + 90 - $top-plus-deg;
+  		@include transform(rotate($bot-ball-step-1));
+  	}
+
+  	75% {
+  		$bot-ball-step-2: $bot-ball-def-deg - 90 + $top-plus-deg;
+  		@include transform(rotate($bot-ball-step-2));
+  	}
+
+  	100% {
+  		@include transform(rotate($bot-ball-def-deg));
+  	}
+  }
+
+  @include keyframes(circle-effect-left) {
+  	0% {
+  		opacity: 0;
+  	}
+
+  	24.99% {
+  		opacity: 0;
+  	}
+
+  	25% {
+  		opacity: 1;
+  		border-color: rgba(0, 0, 0, 0.6);
+  		@include transform(scale(0.5));
+  	}
+
+  	40% {
+  		border-color: rgba(0, 0, 0, 0);
+  	}
+
+  	45% {
+  		opacity: 0;
+  		border-color: rgba(0, 0, 0, 0);
+  		@include transform(scale(3, 1));
+  	}
+
+  	100% {
+  		opacity: 0;
+  	}
+  }
+
+  @include keyframes(circle-effect-right) {
+  	0% {
+  		opacity: 0;
+  	}
+
+  	74.99% {
+  		opacity: 0;
+  	}
+
+  	75% {
+  		opacity: 1;
+  		border-color: rgba(0, 0, 0, 0.6);
+  		@include transform(scale(0.5));
+  	}
+
+  	90% {
+  		border-color: rgba(0, 0, 0, 0);
+  	}
+
+  	95% {
+  		opacity: 0;
+  		border-color: rgba(0, 0, 0, 0);
+  		@include transform(scale(3, 1));
+  	}
+
+  	100% {
+  		opacity: 0;
+  	}
+  }
+
+
+  .wrap-preload {
+  	position: fixed;
+  	z-index: 99;
+  	top: 0;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	padding: 0;
+  	margin: 0;
+  	opacity: 1;
+  	visibility: visible;
+  	background: rgba(255, 255, 255, 0.6);
+  	@include size(100%, 100%);
+  	@include transform(scale(1));
+
+  	&.circle-ball {
+  		background: rgba(255, 255, 255, 0.8);
+
+  		.wrap-content {
+  			$wrap-size: 128px;
+  			$ball-size: 16px;
+
+  			position: absolute;
+  			top: 50%;
+  			left: 50%;
+  			z-index: 1;
+  			@include size($wrap-size, $wrap-size);
+  			@include transform(translate(-50%, -50%));
+
+  			.wrap-circle-ball {
+  				position: relative;
+  				@include size(100%, 100%);
+
+  				.ball {
+  					position: absolute;
+  					top: 50%;
+  					margin-top: $ball-size/-2;
+  					border-radius: 100%;
+  					@include size($ball-size, $ball-size);
+
+  					&.ball-top {
+  						z-index: 1;
+  						background: $color-green-base;
+  						@include transform-origin($wrap-size/2 50%);
+  						@include transform(rotate($top-ball-def-deg));
+  						@include animation(ball-top, $ball-duration);
+
+  						&:nth-of-type(2) {
+  							background: $color-green-light;
+  							@include size($ball-size/2, $ball-size/2);
+  							@include animation(ball-top, $ball-duration, linear, $ball-duration/5);
+  						}
+  					}
+
+  					&.ball-bot {
+  						opacity: 0.4;
+  						background: $color-yellow-base;
+  						@include transform-origin($wrap-size/2 50%);
+  						@include transform(rotate($bot-ball-def-deg));
+  						@include animation(ball-bot, $ball-duration);
+
+  						&:nth-of-type(2) {
+  							background: $color-yellow-light;
+  							@include size($ball-size/2, $ball-size/2);
+  							@include animation(ball-bot, $ball-duration, linear, $ball-duration/5);
+  						}
+  					}
+  				}
+
+  				.wrap-effect {
+  					position: absolute;
+  					top: 50%;
+  					margin-top: $ball-size/-2;
+  					left: $ball-size/-2;
+  					right: $ball-size/-2;
+
+  					.circle-effect {
+  						opacity: 0;
+  						position: absolute;
+  						border-radius: 100%;
+  						border: 1px solid rgba(0, 0, 0, 0.6);
+  						@include size($ball-size*2, $ball-size*2);
+
+  						&:nth-of-type(2) {
+  							&:before {
+  								border: none;
+  								background: rgba(0, 0, 0, 0.2);
+  								@include size($ball-size/2, $ball-size/2);
+  							}
+  						}
+
+  						&:before {
+  							content: '';
+  							position: absolute;
+  							top: 50%;
+  							left: 50%;
+  							border-radius: 100%;
+  							border: 1px solid rgba(0, 0, 0, 0.2);
+  							@include size($ball-size, $ball-size);
+  							@include transform(translate(-50%, -50%));
+  						}
+
+  						&.left {
+  							left: 0;
+  							@include animation(circle-effect-left, $ball-duration);
+
+  							&:nth-of-type(2) {
+  								top: $ball-size/2;
+  								left: $ball-size/4;
+  								@include size($ball-size, $ball-size);
+  								@include animation(circle-effect-left, $ball-duration, linear, $ball-duration/5);
+  							}
+  						}
+
+  						&.right {
+  							right: 0;
+  							@include animation(circle-effect-right, $ball-duration);
+
+  							&:nth-of-type(2) {
+  								top: $ball-size/2;
+  								right: $ball-size/4;
+  								@include size($ball-size, $ball-size);
+  								@include animation(circle-effect-right, $ball-duration, linear, $ball-duration/5);
+  							}
+  						}
+  					}
+  				}
+  			}
+  		}
+  	}
+
+  	&.hide-out {
+  		z-index: -1;
+  		opacity: 0;
+  		visibility: hidden;
+  		@include transform(scale(2));
+  	}
+
+  	.overlay {
+  		position: absolute;
+  		top: 0;
+  		left: 0;
+  		right: 0;
+  		bottom: 0;
+  		z-index: 99;
+  		display: none;
+  		@include size(100%, 100%);
+  	}
+
+  }
+}

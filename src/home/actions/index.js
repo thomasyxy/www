@@ -1,28 +1,26 @@
 'use strict';
+import { ajax, nameSpace } from '../../utils';
 
-// import { fetch, nameSpace } from '../../utils';
-//
-// const ns = nameSpace('HOME');
-//
-// export const GET_LIST_SUCCESS = ns('GET_LIST_SUCCESS');
+const ns = nameSpace('HOME');
 
-export function getList(counter, sucCallback, failCallback) {
-  // return (dispatch) => {
-  //   // 接收到数据
-  //   fetch({
-  //     api: 'page2List',
-  //     method: 'get',
-  //   }, (json) => {
-  //     dispatch({
-  //       type: GET_LIST_SUCCESS,
-  //       data: {
-  //         list: json.data,
-  //         counter
-  //       }
-  //     });
-  //     sucCallback(json);
-  //   }, (json) => {
-  //     failCallback(json);
-  //   });
-  // };
+export const LOAD_ARTICLE_LIST = ns('LOAD_ARTICLE_LIST');
+
+export function getArticleList(params, suc, err) {
+  return (dispatch) => {
+    ajax({
+      api: 'GET_ARTICLE_LIST',
+      method: 'get',
+      body: params
+    }, (res) => {
+      dispatch({
+        type: LOAD_ARTICLE_LIST,
+        data: {
+          data: res.data
+        }
+      });
+      suc(res);
+    }, (res) => {
+      err(res);
+    });
+  };
 }
