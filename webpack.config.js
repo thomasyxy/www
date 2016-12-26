@@ -23,9 +23,15 @@ const webpackConfigBase = {
       },
       {
         test: /\.scss|.css$/,
-        loaders: ['style', 'css', 'sass'],
-        include: [path.resolve(__dirname, './src'), path.resolve(__dirname, './node_modules')],
-        exclude: /node_modules/
+        loaders: ['style', 'css', 'sass']
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
       }
     ]
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Navbar, Nav, NavItem, NavDropdown, PanelGroup, Panel, ListGroup, ListGroupItem, Clearfix } from 'react-bootstrap';
+import {Button} from 'fit-button';
 import Utils from '../../../../utils';
 
 require('./index.scss');
@@ -17,6 +18,7 @@ export default class TopBar extends React.Component {
     this._renderNavbar = this._renderNavbar.bind(this);
     this._renderDropList = this._renderDropList.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
@@ -26,10 +28,16 @@ export default class TopBar extends React.Component {
     this.setState({ activeKey });
   }
 
+  handleClick() {
+    console.log('基本用法 点击')
+  }
+
   _renderNavbar(navData) {
     return (
       <Navbar default collapseOnSelect>
-        <div className="top-menu-btn">aaa</div>
+        <Button className="top-menu-btn" onClick={this.handleClick.bind(this)}>
+          &#xe622;
+        </Button>
         <Navbar.Header>
           <Navbar.Brand>
             <div className="top-line">

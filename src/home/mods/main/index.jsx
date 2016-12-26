@@ -9,13 +9,13 @@ import { ajax } from '../../../utils';
 import './index.scss';
 
 import Header from '../parts/header';
+import Content from '../parts/content';
 import Preload from '../components/preload';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       Preloading: true,
       waitTime: 4000
     };
@@ -44,6 +44,16 @@ class App extends React.Component {
     })
   }
 
+  loadContentData(page) {
+    const {
+      getArticleList
+    } = this.props;
+    getArticleList({
+      page: page
+    })
+  }
+
+
   waitPreloadPlay(delay) {
     setTimeout(() => {
       this.setState({
@@ -58,6 +68,7 @@ class App extends React.Component {
         {
           initData.navData ? <Header navData={initData.navData} /> : ''
         }
+        <Content />
       </div>
     )
   }
@@ -76,9 +87,7 @@ class App extends React.Component {
       } = this.state;
     return (
       <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
-        <div className="main-page">
           { Preloading && initData ? this._renderPage(initData) : this.renderPreloading() }
-        </div>
       </ReactCSSTransitionGroup>
     );
   }

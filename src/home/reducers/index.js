@@ -5,8 +5,9 @@ import * as actions from '../actions/index';
 // 对页面prop 数据进行管理
 const initialState = {
   initData: null,
-  list: [],
-  counter: 0
+  essayList: [],
+  curPage: 0,
+  loading: false
 };
 const defaultAction = {
   type: 'doNothing'
@@ -14,12 +15,12 @@ const defaultAction = {
 
 export default function index(state = initialState, action = defaultAction) {
   switch (action.type) {
-    case actions.GET_LIST_SUCCESS:
+    case actions.LOAD_ARTICLE_LIST:
       return Object.assign({}, state, {
-        list: action.data.list.map(item => (
-          `第${action.data.counter}次加载：${item}`
+        essayList: action.data.list.map(item => (
+          `第${action.data.page}次加载：${item}`
         )),
-        counter: action.data.counter
+        page: action.data.page
       });
     default:
       return state;
