@@ -4,7 +4,7 @@ import * as actions from '../actions/index';
 
 // 对页面prop 数据进行管理
 const initialState = {
-  waitTime: 4000,
+  waitTime: 2500,
   essayList: [],
   curPage: 0,
   pageloading: false

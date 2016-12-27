@@ -5,7 +5,7 @@ module.exports = {
     var data = {'name': 'jifeng', 'company': 'taobao'};
     if (this.query && this.query.callback) {
       //console.log('请求2:'+params.query);
-      var str =  this.query.callback[0] + '(' + JSON.stringify(data) + ')';//jsonp
+      var str =  this.query.callback + '(' + JSON.stringify(data) + ')';//jsonp
       this.body = str;
     } else {
       this.body = JSON.stringify(data);
