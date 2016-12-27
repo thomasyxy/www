@@ -100,9 +100,14 @@ const DevStep = function(){
 
 const isBuild = Utils.dataFn.hasParam('build')
 
-const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
+const isDebug = Utils.dataFn.hasParam('debug')
 
-isBuild || !isDev ? BuildStep() : DevStep()
+if(!isDebug) {
+  const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
+
+  isBuild || !isDev ? BuildStep() : DevStep()
+}
+
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);

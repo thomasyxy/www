@@ -14,6 +14,9 @@ module.exports = {
   },
   normal: function *(next){
     var data = 11;
+    this.res.header = {
+      'Access-Control-Allow-Origin': 'http://vue.yinxueyuan.com'
+    }
     this.body = {
       a: data
     };
