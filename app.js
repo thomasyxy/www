@@ -102,9 +102,9 @@ const isBuild = Utils.dataFn.hasParam('build')
 
 const isDebug = Utils.dataFn.hasParam('debug')
 
-if(!isDebug) {
-  const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
+const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
 
+if(!isDebug) {
   isBuild || !isDev ? BuildStep() : DevStep()
 }
 
