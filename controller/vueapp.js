@@ -15,7 +15,10 @@ module.exports = {
   normal: function *(next){
     var data = 11;
     this.res.header = {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': 'http://vue.yinxueyuan.com',
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Expose-Headers': 'Info',
+      'Content-Type': 'text/html; charset=utf-8'
     }
     this.body = {
       a: data
