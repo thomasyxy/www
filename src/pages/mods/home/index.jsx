@@ -75,7 +75,6 @@ class App extends React.Component {
           <Sidebar width={100}
                    direction="left">侧边栏</Sidebar>
           <Section>主体</Section>
-          <Footer height={40}>页尾</Footer>
       </Layout>
     )
   }
