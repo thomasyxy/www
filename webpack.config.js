@@ -8,7 +8,7 @@ const webpackConfigProd = require('./webpack.config.prod')
 
 const webpackConfigBase = {
   entry: {
-    app: path.resolve(__dirname, './src/home/index.js')
+    app: path.resolve(__dirname, './src/pages/index.js')
   },
   resolve: {
     extensions: ['', '.js', '.jsx']

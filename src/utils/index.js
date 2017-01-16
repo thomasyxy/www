@@ -7,6 +7,7 @@ import API from './api';
 var Utils =  {
   ajax: function(params, success = () => {}, error = () => {}) {
     if(!params.api || !API[params.api]){
+      console.err(params.api ? `${params.api}：该接口不存在` : '接口名不能为空');
       return
     }
 
@@ -76,6 +77,12 @@ var Utils =  {
     }else{
       window.location.href = url;
     }
+  },
+  isEmptyObject: function(obj) {
+    for (var key in obj) {
+      return false;
+    }
+    return true;
   }
 }
 
