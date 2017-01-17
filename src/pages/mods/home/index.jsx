@@ -21,7 +21,8 @@ class App extends React.Component {
     this.state = {
       preloading: false,
       waitTime: 2000,
-      headerHeight: 64
+      headerHeight: 45,
+      sidebarVisible: false
     };
 
     this.loadInitData = this.loadInitData.bind(this);
@@ -65,23 +66,17 @@ class App extends React.Component {
 
   _renderPage(navData) {
     const {
-      headerHeight
+      headerHeight,
+      sidebarVisible
     } = this.state;
     return (
       <Layout className="main-page" key={2}>
-          <Header height={headerHeight}>
-            { this._renderTopbar(navData) }
-          </Header>
-          <Sidebar width={100}
-                   direction="left">侧边栏</Sidebar>
-          <Section>主体</Section>
+        <Header height={headerHeight}>
+          <Topbar navData={navData}/>
+        </Header>
+        <Sidebar width={200} direction="left">侧边栏</Sidebar>
+        <Section>主体</Section>
       </Layout>
-    )
-  }
-
-  _renderTopbar(navData) {
-    return (
-      <Topbar navData={navData}/>
     )
   }
 

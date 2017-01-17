@@ -16,10 +16,10 @@
         },
         {
           "title": "实验室",
-          "subList": [
+          "list": [
             {
               "title": "游戏",
-              "typeList": [
+              "list": [
                 {
                   "title": "小游戏",
                   "url": "1112",
@@ -37,11 +37,12 @@
                 }
               ],
               "default": false,
-              "url": ""
+              "url": "",
+              "desc": "2333333333"
             },
             {
               "title": "音乐",
-              "typeList": [
+              "list": [
                 {
                   "title": "小游戏",
                   "url": "1112",
@@ -64,11 +65,12 @@
                 }
               ],
               "default": false,
-              "url": ""
+              "url": "",
+              "desc": "2333333333"
             },
             {
               "title": "电影",
-              "typeList": [
+              "list": [
                 {
                   "title": "小游戏",
                   "url": "1112",
@@ -91,11 +93,12 @@
                 }
               ],
               "default": false,
-              "url": ""
+              "url": "",
+              "desc": "2333333333"
             },
             {
               "title": "开发",
-              "typeList": [
+              "list": [
                 {
                   "title": "小游戏",
                   "url": "1112",
@@ -118,15 +121,19 @@
                 }
               ],
               "default": false,
-              "url": ""
+              "url": "",
+              "desc": "2333333333"
             },
             {
               "title": "更多",
-              "typeList": [],
+              "list": [],
               "default": false,
-              "url": "aaa"
+              "url": "aaa",
+              "desc": "2333333333"
             }
-          ]
+          ],
+          "url": "",
+          "desc": "2333333333"
         }
       ]
     }
