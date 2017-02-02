@@ -4,7 +4,8 @@ import * as actions from '../../actions/home';
 
 // 对页面prop 数据进行管理
 const initialState = {
-  navData: {}
+  navData: {},
+  easyList: []
 };
 const defaultAction = {
   type: 'doNothing'
@@ -14,6 +15,8 @@ export default function index(state = initialState, action = defaultAction) {
   switch (action.type) {
     case actions.LOAD_INIT_DATA:
       return loadInitData(state, action);
+    case actions.LOAD_ARTICLE_LIST:
+      return loadContentData(state, action);
     default:
       return state;
   }
@@ -22,5 +25,11 @@ export default function index(state = initialState, action = defaultAction) {
 function loadInitData(state, action) {
   let nextState = Object.assign({}, state);
   nextState.navData = action.navData;
+  return nextState;
+}
+
+function loadContentData(state, action) {
+  let nextState = Object.assign({}, state);
+  nextState.easyList = action.data;
   return nextState;
 }

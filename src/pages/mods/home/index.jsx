@@ -69,6 +69,10 @@ class App extends React.Component {
       headerHeight,
       sidebarVisible
     } = this.state;
+    const {
+      easyList
+    } = this.props;
+
     return (
       <Layout className="main-page" key={2}>
         <Header height={headerHeight}>
@@ -80,6 +84,7 @@ class App extends React.Component {
         <Section>
           <Content
             getData={this.props.getArticleList}
+            list={easyList}
           />
         </Section>
       </Layout>
