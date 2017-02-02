@@ -11,7 +11,6 @@ export default class Content extends React.Component {
     this.loadContentData = this.loadContentData.bind(this);
     this.state = {
       curPage: 1,
-      easyList: [],
       loading: true
     }
   }
@@ -29,26 +28,37 @@ export default class Content extends React.Component {
     } = this.props;
     getData({
       page: page
+    }, () => {
+      this.setState({
+        loading: false
+      })
     })
   }
 
   renderList(list) {
     return (
       <div className="content">
-
+        {
+          list && list.length > 0 ? list.map((item, index) =>
+            <div key={index}>{item.title}</div>
+          ) : ''
+        }
       </div>
     )
   }
 
   render() {
     const {
-      easyList,
       loading
     } = this.state;
 
+    const {
+      list
+    } = this.props;
+
     return (
       <div className="content-container">
-        { loading ? <Loading className="content-loading"/> : this.renderList(easyList) }
+        { loading ? <Loading className="content-loading"/> : this.renderList(list) }
       </div>
     );
   }
