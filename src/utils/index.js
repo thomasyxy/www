@@ -24,6 +24,7 @@ var Utils =  {
       url: params.api,
       type: params.type || 'json',
       method: params.method || 'get',
+      data: params.body || {},
       success: (res) => {
         if(res.success === true){
           success && success(res.data);
