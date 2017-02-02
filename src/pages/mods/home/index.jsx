@@ -74,8 +74,14 @@ class App extends React.Component {
         <Header height={headerHeight}>
           <Topbar navData={navData}/>
         </Header>
-        <Sidebar width={200} direction="left">侧边栏</Sidebar>
-        <Section>主体</Section>
+        {
+          // <Sidebar width={200} direction="left">侧边栏</Sidebar>
+        }
+        <Section>
+          <Content
+            getData={this.props.getArticleList}
+          />
+        </Section>
       </Layout>
     )
   }

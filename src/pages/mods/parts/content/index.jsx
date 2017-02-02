@@ -20,15 +20,14 @@ export default class Content extends React.Component {
     const {
       curPage
     } = this.state;
-
-    this.loadContentData(curPage)
+    this.loadContentData(curPage);
   }
 
   loadContentData(page) {
     const {
-      getArticleList
+      getData
     } = this.props;
-    getArticleList({
+    getData({
       page: page
     })
   }
@@ -36,19 +35,20 @@ export default class Content extends React.Component {
   renderList(list) {
     return (
       <div className="content">
-        
+
       </div>
     )
   }
 
   render() {
     const {
-      easyList
+      easyList,
+      loading
     } = this.state;
 
     return (
       <div className="content-container">
-        { loading ? <Loading/> : this.renderList(easyList) }
+        { loading ? <Loading className="content-loading"/> : this.renderList(easyList) }
       </div>
     );
   }

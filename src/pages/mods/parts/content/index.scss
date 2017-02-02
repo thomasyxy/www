@@ -1,7 +1,9 @@
 .content-container{
   width: 800px;
   height: 1000px;
-  background: #eee;
   padding-top: 64px;
   margin: 0 auto;
+  .content-loading{
+    text-align: center;
+  }
 }
