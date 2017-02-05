@@ -17,6 +17,7 @@ const network = os.networkInterfaces()
 const path = require('path')
 const ora = require('ora')
 const staticCache = require('koa-static-cache')
+const mongoose = require('mongoose')
 const Utils = require('./utils')
 
 
@@ -144,6 +145,13 @@ onerror(app, {
         }
     }
 })
+
+//连接mongodb测试
+const G.M.db = mongoose.createConnection('localhost', G.C.dbName)
+db.on('error',console.error.bind(console,'连接错误:'))
+db.once('open', function(){
+  console.log(`${G.C.dbName}: 连接成功！`)
+});
 
 //路由
 app.use(require('./configs/routers')())

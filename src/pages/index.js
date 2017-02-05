@@ -5,6 +5,7 @@ import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import routes from './routes';
 
@@ -20,9 +21,11 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 ReactDom.render(
   <Provider store={store}>
-    <Router history={history}>
-      {routes}
-    </Router>
+    <MuiThemeProvider>
+      <Router history={history}>
+        {routes}
+      </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('container')
 );
