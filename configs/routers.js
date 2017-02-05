@@ -10,8 +10,8 @@ module.exports = function(app){
   router.get('/', ctrl.home.index);
   router.get('/home/getInitData', ctrl.home.getInitData);
 
-  router.get('/yixuan/blog/getTitle', ctrl.blog.getTitle);
-
+  router.get('/blog/getTitle', ctrl.blog.getTitle);
+  router.get('/blog/md2html', ctrl.blog.md2html);
 
   router.get('/vueapp/jsonp', ctrl.vueapp.jsonp);
   router.get('/vueapp/normal', ctrl.vueapp.normal);

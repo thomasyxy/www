@@ -6,14 +6,16 @@ var Config = {
     staticPath: '/static',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    host: 'http://local.yinxueyuan.com'
+    host: 'http://local.yinxueyuan.com',
+    dbName: 'yixuan'
   },
   'production': {
     port: 3000,
     staticPath: '/static',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    host: 'http://www.yinxueyuan.com'
+    host: 'http://www.yinxueyuan.com',
+    dbName: 'yixuan'
   }
 };
 

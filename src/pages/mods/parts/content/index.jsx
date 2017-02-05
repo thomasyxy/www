@@ -1,7 +1,7 @@
 import React from 'react';
-import Loading from 'fit-loading'
-
-// import Topbar from '../../components/top-bar';
+import Loading from 'fit-loading';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 require('./index.scss');
 
@@ -35,16 +35,31 @@ export default class Content extends React.Component {
     })
   }
 
-  renderList(list) {
+  _renderList(list) {
     return (
       <div className="content">
         {
           list && list.length > 0 ? list.map((item, index) =>
-            <div key={index}>{item.title}</div>
+            this._renderItem(item, index)
           ) : ''
         }
       </div>
     )
+  }
+
+  _renderItem(item, index) {
+    return <div className={`content-item content-item${index}`} key={index}>
+      <Card>
+        <CardMedia
+          overlay={<CardTitle title={item.title} subtitle={item.subtitle} />}
+        >
+          <img src="http://www.material-ui.com/images/nature-600-337.jpg" />
+        </CardMedia>
+        <CardText>
+          {item.content}
+        </CardText>
+      </Card>
+    </div>
   }
 
   render() {
@@ -58,7 +73,7 @@ export default class Content extends React.Component {
 
     return (
       <div className="content-container">
-        { loading ? <Loading className="content-loading"/> : this.renderList(list) }
+        { loading ? <Loading className="content-loading"/> : this._renderList(list) }
       </div>
     );
   }

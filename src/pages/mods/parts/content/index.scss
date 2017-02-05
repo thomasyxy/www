@@ -1,9 +1,12 @@
 .content-container{
   width: 800px;
   height: 1000px;
-  padding-top: 64px;
+  padding-top: 20px;
   margin: 0 auto;
   .content-loading{
     text-align: center;
+  }
+  .content-item{
+    margin-bottom: 20px;
   }
 }
