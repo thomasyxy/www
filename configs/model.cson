@@ -1,3 +1,0 @@
-home_data:
-  url: '/yixuan/blog/get_title',
-  method: 'get'

@@ -1,7 +1,7 @@
 "use strict";
 
 global.G = {
-  C: null,
+  C: null, // 全局配置
   R: null,
   M: null
 }
@@ -17,7 +17,6 @@ const network = os.networkInterfaces()
 const path = require('path')
 const ora = require('ora')
 const staticCache = require('koa-static-cache')
-const mongoose = require('mongoose')
 const Utils = require('./utils')
 
 
@@ -40,6 +39,7 @@ console.log(`> current environment: ` + evn)
 
 
 G.C = require('./configs/config')[evn]
+G.M = require('./models/index')
 
 G.C.evn = evn
 G.C.root = root
@@ -115,7 +115,7 @@ if(!isDebug) {
 
 //静态资源文件
 app.use(staticCache('./public', {
-    maxAge: 0
+  maxAge: 0
 }));
 
 const jade = new Jade({
@@ -131,38 +131,31 @@ const jade = new Jade({
 
 //错误处理
 onerror(app, {
-    'json': function (err) {
-        console.log(err);
-        this.body = {
-            success: false,
-            message: err.message
-        }
-    },
-    'html': function (err) {
-        console.log(err);
-        this.body = {
-            message: '服务器错误'
-        }
+  'json': function (err) {
+    console.log(err);
+    this.body = {
+      success: false,
+      message: err.message
     }
+  },
+  'html': function (err) {
+    console.log(err);
+    this.body = {
+      message: '服务器错误'
+    }
+  }
 })
-
-//连接mongodb测试
-const G.M.db = mongoose.createConnection('localhost', G.C.dbName)
-db.on('error',console.error.bind(console,'连接错误:'))
-db.once('open', function(){
-  console.log(`${G.C.dbName}: 连接成功！`)
-});
 
 //路由
 app.use(require('./configs/routers')())
 
 app.use(function*(next) {
-    yield next
-    if (404 !== this.status) return;
-    this.status = 404;
-    this.render('404', {
-      msg: 'Not Found'
-    })
+  yield next
+  if (404 !== this.status) return;
+  this.status = 404;
+  this.render('404', {
+    msg: 'Not Found'
+  })
 })
 
 /**

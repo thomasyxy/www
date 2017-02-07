@@ -4,25 +4,42 @@ const path = require('path');
 const Remarkable = require('remarkable');
 const md = new Remarkable('full');
 
-function generate(dir) {
-    let files = fs.readdirSync(`${dir}/md/`);
-    for (file in files) {
-        let file_name = files[file];
+function generateArticleList(dir) {
+  let files = fs.readdirSync(`${dir}/md/`);
+  let MyArticle = G.M('MyArticle');
+  let result = {
+    success: 0,
+    fail: 0
+  }
+  for (let file in files) {
+    let file_name = files[file];
+    let file_title = file_name.substr(0,file_name.length - 3);
 
-        if (file_name.substr(file_name.length - 3) === ".md") {
-            console.log("File: " + file_name + " found!");
-            let txt = fs.readFileSync(`${dir}/md/${file_name}`);
-            let html = md.render(txt.toString());
+    if (file_name.substr(file_name.length - 3) === ".md") {
+      console.log("File: " + file_name + " found!");
+      let txt = fs.readFileSync(`${dir}/md/${file_name}`);
+      let html = md.render(txt.toString());
 
-            fs.writeFileSync(
-                `${dir}/html/${file_name.substr(0,file_name.length - 3)}.html`,
-                html);
+      let article = new MyArticle({
+        title: file_title,
+        date: new Date(),
+        content: html
+      });
+      article.save(function (err) {
+        result.fail++
+      });
 
-            console.log(`File:
-                    ${file_name.substr(0,file_name.length - 3)}
-                    .html Write Success!`)
-        }
+      fs.writeFileSync(`${dir}/html/${file_title}.html`,html);
+
+      console.log(`File:
+              ${file_name.substr(0,file_name.length - 3)}
+              .html Write Success!`)
+
+      result.success++
     }
+  }
+
+  return result;
 }
 
 
@@ -34,9 +51,11 @@ module.exports = {
     }
   },
   md2html: function *(next){
-    const ARTICLE_PATH = `${__dirname}/source`;
+    const ARTICLE_PATH = path.resolve(__dirname, '../public/source');
     console.log(ARTICLE_PATH);
-    // yield generate('/source/md/');
+    let result = generateArticleList(ARTICLE_PATH);
+
+    this.body = result
     yield next
   }
 }
