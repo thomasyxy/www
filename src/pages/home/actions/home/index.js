@@ -1,5 +1,5 @@
 'use strict';
-import { ajax, nameSpace } from '../../../utils';
+import { ajax, nameSpace } from '../../../../utils';
 
 const ns = nameSpace('HOME');
 

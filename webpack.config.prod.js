@@ -7,7 +7,7 @@ module.exports = {
   output: {
     publicPath: '/public',
     path: path.resolve(__dirname, './public'),
-    filename: 'static/js/bundle.js'
+    filename: 'static/js/[name].js'
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),

@@ -7,7 +7,7 @@ import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import { Layout, Header , Sidebar, Section, Footer } from 'fit-layout-global'
 
 import * as actions from '../../actions/home';
-import Utils from '../../../utils';
+import Utils from '../../../../utils';
 import './index.scss';
 
 // import Header from '../parts/header';

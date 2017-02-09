@@ -6,7 +6,7 @@ module.exports = {
   output: {
     publicPath: '/static',
     path: path.resolve(__dirname, './static'),
-    filename: 'js/bundle.js'
+    filename: 'js/[name].js'
   },
   plugins: [
     new webpack.SourceMapDevToolPlugin({}),

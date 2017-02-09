@@ -5,9 +5,20 @@ module.exports = {
   index: function *(next){
     // var data = yield this.fetch('home_data', {}, {})
     this.render('index',{
+      title: '逸轩的博客',
       data: {
-        msg: 'hello world',
+        msg: '1',
         smile: ':)'
+      }
+    })
+    yield next
+  },
+
+  center: function *(next){
+    this.render('login', {
+      title: 'login',
+      data: {
+        msg: 'login'
       }
     })
     yield next
