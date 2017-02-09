@@ -23,6 +23,9 @@ npm run debug
 # build test at localhost
 npm run build
 
+# deploy and Initialized
+pm2 deploy production
+
 # deploy with pm2 after commit to github
 pm2 deploy production
 ```
