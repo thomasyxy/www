@@ -8,5 +8,18 @@
   }
   .content-item{
     margin-bottom: 20px;
+    .content-text{
+      margin: 0;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+  }
+  .preview-pic{
+    height: 450px;
+    img{
+      width: 100%;
+    }
   }
 }

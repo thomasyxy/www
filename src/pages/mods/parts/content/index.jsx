@@ -53,10 +53,12 @@ export default class Content extends React.Component {
         <CardMedia
           overlay={<CardTitle title={item.title} subtitle={item.subtitle} />}
         >
-          <img src="http://www.material-ui.com/images/nature-600-337.jpg" />
+          <div className="preview-pic">
+            <img src="http://www.material-ui.com/images/nature-600-337.jpg" />
+          </div>
         </CardMedia>
         <CardText>
-          {item.content}
+          <p className="content-text">{item.content}</p>
         </CardText>
       </Card>
     </div>
