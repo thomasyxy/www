@@ -3,7 +3,7 @@ import React from 'react';
 import { Menu, RightMenu, MenuItem, SubMenu } from 'fit-menu'
 import {Button} from 'fit-button';
 
-import Utils from '../../../../utils';
+import Utils from '../../../../../utils';
 
 require('./index.scss');
 

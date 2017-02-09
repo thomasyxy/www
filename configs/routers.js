@@ -8,6 +8,7 @@ const ctrl = require('../controller/index');
 module.exports = function(app){
 
   router.get('/', ctrl.home.index);
+  router.get('/center', ctrl.home.center);
   router.get('/home/getInitData', ctrl.home.getInitData);
 
   router.get('/blog/getTitle', ctrl.blog.getTitle);
