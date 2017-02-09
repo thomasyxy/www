@@ -22,7 +22,6 @@ function generateArticleList(dir) {
 
       let article = new MyArticle({
         title: file_title,
-        date: new Date(),
         content: html
       });
       article.save(function (err) {
