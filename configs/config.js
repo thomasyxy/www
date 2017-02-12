@@ -3,6 +3,7 @@ const path = require('path')
 var Config = {
   'development': {
     port: 3000,
+    sslPort: 3001,
     staticPath: '/static',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
@@ -11,6 +12,7 @@ var Config = {
   },
   'production': {
     port: 3000,
+    sslPort: 3001,
     staticPath: '/static',
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
