@@ -6,28 +6,53 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import 'whatwg-fetch'
 
 class LoginPage extends React.Component {
   constructor (props) {
     super(props);
     this.state = assign({}, props, {
-      expanded: false
+      username: '',
+      password: ''
     });
 
     this.handleClickLogin = this.handleClickLogin.bind(this)
-    this.handleClickReset = this.handleClickReset.bind(this)
+    this.handleUsername = this.handleUsername.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
   }
+
   componentWillMount() {
   }
 
 
+  handleClickLogin() {
+    const {
+      username,
+      password
+    } = this.state;
 
-  handleClickLogin(expanded) {
-    this.setState({expanded: expanded});
+    fetch('/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    })
   };
 
-  handleClickReset() {
-    this.setState({expanded: true});
+  handleUsername(e) {
+    this.setState({
+      username: e.target.value,
+    });
+  };
+
+  handlePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
   };
 
 
@@ -41,6 +66,7 @@ class LoginPage extends React.Component {
               className="custom-input"
               hintText=""
               floatingLabelText="UserName"
+              onChange={this.handleUsername}
             />
           </div>
           <div className="input-psd">
@@ -49,11 +75,12 @@ class LoginPage extends React.Component {
               hintText=""
               floatingLabelText="Password"
               type="password"
+              onChange={this.handlePassword}
             />
           </div>
         </div>
         <div className="btn-group">
-          <RaisedButton label="Login" primary={true} />
+          <RaisedButton label="Login" primary={true} onClick={this.handleClickLogin}/>
         </div>
       </Paper>
     );

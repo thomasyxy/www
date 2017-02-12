@@ -11,6 +11,9 @@ module.exports = function(app){
   router.get('/center', ctrl.home.center);
   router.get('/home/getInitData', ctrl.home.getInitData);
 
+  router.post('/user/login', ctrl.user.login);
+  router.get('/user/register', ctrl.user.register);
+
   router.get('/blog/getTitle', ctrl.blog.getTitle);
   router.get('/blog/md2html', ctrl.blog.md2html);
 
