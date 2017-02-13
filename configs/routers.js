@@ -20,6 +20,8 @@ module.exports = function(app){
   router.get('/vueapp/jsonp', ctrl.vueapp.jsonp);
   router.get('/vueapp/normal', ctrl.vueapp.normal);
 
+  router.get('/resume/mobile', ctrl.resume.mobile);
+
 
   return router.middleware();
 }

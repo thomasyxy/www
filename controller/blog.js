@@ -18,7 +18,7 @@ function generateArticleList(dir) {
     if (file_name.substr(file_name.length - 3) === ".md") {
       console.log("File: " + file_name + " found!");
       let txt = fs.readFileSync(`${dir}/md/${file_name}`);
-      let html = md.render(txt.toString());
+      let html = executeMd2html(txt.toString)
 
       let article = new MyArticle({
         title: file_title,
@@ -41,6 +41,10 @@ function generateArticleList(dir) {
   return result;
 }
 
+function executeMd2html(txt) {
+  return md.render(txt);
+}
+
 
 
 module.exports = {
@@ -49,12 +53,15 @@ module.exports = {
       "title": "yixuan's blog"
     }
   },
-  md2html: function *(next){
-    const ARTICLE_PATH = path.resolve(__dirname, '../public/source');
-    console.log(ARTICLE_PATH);
-    let result = generateArticleList(ARTICLE_PATH);
 
-    this.body = result
+  md2html: function *(next){
+    let post = yield parse(this.request);
+    let mdString = post.mdString;
+    executeMd2html(mdString);
+
+    this.body = {
+      success:
+    }
     yield next
   }
 }
