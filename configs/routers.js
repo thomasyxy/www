@@ -21,6 +21,9 @@ module.exports = function(app){
   router.get('/vueapp/normal', ctrl.vueapp.normal);
 
   router.get('/resume/mobile', ctrl.resume.mobile);
+  router.get('/resume/query', ctrl.resume.query);
+  router.post('/resume/save', ctrl.resume.save);
+  router.get('/resume/list', ctrl.resume.list);
 
 
   return router.middleware();

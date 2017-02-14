@@ -1,3 +1,7 @@
+@import "~react-mde/lib/styles/react-mde.scss";
+@import "~font-awesome/css/font-awesome.css";
+@import "../../utils/scss/markdown.scss";
+
 html,body{
   width: 100%;
   height: 100%;
@@ -5,4 +9,59 @@ html,body{
 
 body{
   margin: 0;
+}
+
+#ta1{
+  box-sizing: border-box;
+  min-height: 450px;
+  font-size: 14px;
+}
+
+.resume-part{
+  position: relative;
+  .edit-drawer{
+  }
+}
+
+.edit-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .edit-content{
+    display: flex;
+    width: 100%;
+  }
+  .edit-slidebar{
+    width: 50%;
+    height: 450px;
+    order: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: 35px 20px 20px 20px;
+    .edit-view{
+      height: 100%;
+      overflow: scroll;
+    }
+  }
+  .edit-section{
+    $button-gutter: 4px;
+    width: 50%;
+    order: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    .editor{
+      $height: 100%;
+      height: $height;
+      .mde-preview, .mde-help{
+        display: none;
+      }
+    }
+  }
+  .edit-option{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;;
+    align-items: center;
+  }
 }

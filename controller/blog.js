@@ -57,10 +57,13 @@ module.exports = {
   md2html: function *(next){
     let post = yield parse(this.request);
     let mdString = post.mdString;
-    executeMd2html(mdString);
-
+    let html = executeMd2html(mdString);
     this.body = {
-      success:
+      success: true,
+      msg: '',
+      data: {
+        html: html
+      }
     }
     yield next
   }
