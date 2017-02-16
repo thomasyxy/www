@@ -64,4 +64,34 @@ body{
     justify-content: flex-end;;
     align-items: center;
   }
+  .edit-resume-list{
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+    .edit-resume-item{
+      .edit-resume-title{
+        margin: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+  .edit-resume-add{
+    position: absolute;
+    right: 13px;
+    bottom: 13px;
+  }
+}
+
+.error-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 140px;
+  img{
+    width: 200px;
+    background-color: #000;
+  }
 }
