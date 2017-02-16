@@ -22,8 +22,10 @@ module.exports = function(app){
 
   router.get('/resume/mobile', ctrl.resume.mobile);
   router.get('/resume/query', ctrl.resume.query);
-  router.post('/resume/save', ctrl.resume.save);
   router.get('/resume/list', ctrl.resume.list);
+  router.get('/resume/main', ctrl.resume.main);
+  router.post('/resume/save', ctrl.resume.save);
+  router.post('/resume/create', ctrl.resume.create);
 
 
   return router.middleware();

@@ -7,6 +7,7 @@ import 'whatwg-fetch'
 
 import ResumeView from './resume-view';
 import ResumeEdit from './resume-edit';
+import ResumeError from './resume-error';
 
 const styles = {
   headline: {
@@ -20,15 +21,17 @@ const styles = {
   },
 };
 
-class LoginPage extends React.Component {
+class ResumePage extends React.Component {
   constructor (props) {
     super(props);
     this.state = assign({}, props, {
       pageName: 'view',
       slideIndex: 0,
-      resume: null
+      resume: null,
+      serverResult: true
     });
     this.handleChange = this.handleChange.bind(this);
+    this.showResume = this.showResume.bind(this);
   }
 
   componentWillMount() {
@@ -44,9 +47,13 @@ class LoginPage extends React.Component {
       }
     }).then((res) => {
       res.json().then((res) => {
-        if(res.data && res.data.length > 0){
+        if(res.success){
+          if(res.data && res.data.length > 0){
+            this.showResume(res.data[0])
+          }
+        }else{
           this.setState({
-            resume: res.data[0]
+            serverResult: false
           })
         }
       })
@@ -59,24 +66,27 @@ class LoginPage extends React.Component {
     });
   };
 
+  showResume(resume) {
+    this.setState({
+      resume: resume
+    })
+  }
+
   render() {
     const {
       pageName,
-      resume
+      resume,
+      serverResult
     } = this.state;
 
     const TabConfig = [
       {
         title: '简历预览',
-        view: function() {
-          return <ResumeView resume={resume} />
-        }
+        view: <ResumeView resume={resume} />
       },
       {
         title: '简历编辑',
-        view: function() {
-          return <ResumeEdit resume={resume} />
-        }
+        view: <ResumeEdit resume={resume} showResume={this.showResume} />
       }
     ];
 
@@ -90,13 +100,17 @@ class LoginPage extends React.Component {
       </Tabs>
       <SwipeableViews className="resume-slider" index={this.state.slideIndex} onChangeIndex={this.handleChange}>
         {
-          resume && TabConfig && TabConfig.length > 0 ? TabConfig.map((val, key) =>
-            <div className="resume-part" style={styles.slide} key={key}>{val.view()}</div>
-          ) : ''
+          serverResult ?
+            resume && TabConfig && TabConfig.length > 0 ? TabConfig.map((val, key) =>
+              <div className="resume-part" style={styles.slide} key={key}>
+                {val.view}
+              </div>
+            ) : ''
+           : <ResumeError />
         }
       </SwipeableViews>
     </div>
   }
 }
 
-export default LoginPage;
+export default ResumePage;
