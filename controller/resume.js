@@ -30,10 +30,10 @@ let findMainResume = function *(model, name) {
       result.data = res[0];
       if(res && res.length > 0){
         result.message = '已找到主简历';
-        result.state = 1;
+        result.state = 0;
       }else{
         result.message = '未设置主简历';
-        result.state = 0;
+        result.state = 1;
       }
     }
   });
@@ -76,7 +76,7 @@ let createResume = function *(model, data) {
 
 let saveResume = function *(model, query, data) {
   let result = {};
-  let res = yield model.where(query).update({$set: data})
+  let res = yield model.where(query).update({$set: data});
   if(res.ok === 1){
     result.success = true;
     result.message = '保存成功！'
@@ -87,6 +87,38 @@ let saveResume = function *(model, query, data) {
     result.data = null;
   }
   return result;
+}
+
+let deleteResume = function *(model, query) {
+  let result = {};
+  yield model.remove(query, function(err, res) {
+    if(err){
+      result.success = false;
+      result.message = err;
+    }else{
+      result.success = true;
+      result.message = '删除成功';
+    }
+  })
+  return result
+}
+
+let resetMainResume = function *(model, query) {
+  let result = {};
+  let resumes = yield model.where(query).sort({updateDate: -1}).limit(1);
+  if(resumes.length > 0){
+    let res = yield resumes[0].update({$set: {main: 1}})
+    if(res.ok === 1){
+      result.success = true;
+      result.message = '保存成功！'
+      result.data = res.n;
+    }else{
+      result.success = false;
+      result.message = '保存失败！'
+      result.data = null;
+    }
+  }
+  return result
 }
 
 module.exports = {
@@ -100,16 +132,16 @@ module.exports = {
   },
 
   query: function *(next){
-    let Resume = G.M('resume');
-    let result = yield queryResume(Resume, this.query);
+    let Resume = G.M('resume'),
+        result = yield queryResume(Resume, this.query);
 
     this.body = result;
     yield next
   },
 
   list: function *(next) {
-    let result = {};
-    let name = this.query.username;
+    let result = {},
+        name = this.query.username;
     if(name){
       let Resume = G.M('resume');
       result = yield findUserResume(Resume, name);
@@ -124,9 +156,9 @@ module.exports = {
   },
 
   main: function *(next) {
-    let result = {};
-    let _id = this.query._id;
-    let name = this.query.username;
+    let result = {},
+        _id = this.query._id,
+        name = this.query.username;
     if(_id && name){
       let Resume = G.M('resume');
       result = yield findMainResume(Resume, name);
@@ -146,20 +178,44 @@ module.exports = {
     yield next
   },
 
-  save: function *(next){
-    let result = {};
-    let post = yield parse(this.request);
-    let text = post.text;
-    let id = post.id;
-    let Resume = G.M('resume');
-    let query = {
-      _id: id
+  delete: function *(next){
+    let result = {},
+        _id = this.query._id,
+        name = this.query.username;
+
+    if(_id){
+      let Resume = G.M('resume');
+      let query = {
+        _id: _id
+      };
+
+      result = yield deleteResume(Resume, query);
+
+      if(result.success){
+        result = yield resetMainResume(Resume, {username: name});
+      }
     }
-    let data = {
-      text: text,
-      updateDate: new Date
-    };
+
+
+    this.body = result
+    yield next
+  },
+
+  save: function *(next){
+    let result = {},
+        post = yield parse(this.request),
+        text = post.text,
+        id = post.id;
+
     if(id && text){
+      let Resume = G.M('resume');
+      let query = {
+        _id: id
+      };
+      let data = {
+        text: text,
+        updateDate: Date.parse(new Date)
+      };
       result = yield saveResume(Resume, query, data);
     }
 
@@ -168,26 +224,23 @@ module.exports = {
   },
 
   create: function *(next){
-    let result = {};
-    let post = yield parse(this.request);
-    let name = post.name;
-    let text = post.text;
+    let result = {},
+        post = yield parse(this.request),
+        name = post.name,
+        text = post.text;
+
     if( name && text ){
       let Resume = G.M('resume');
       let data = {
         username: name,
         text: text,
-        createDate: new Date,
-        updateDate: new Date,
+        createDate: Date.parse(new Date),
+        updateDate: Date.parse(new Date),
         title: post.title || `${name}的简历`
       }
       result = yield findMainResume(Resume, data.username);
       if(result.success){
-        if(result.state === 0){
-          data.main = 1;
-        }else{
-          data.main = 0;
-        }
+        data.main = result.state;
         result = yield createResume(Resume, data);
       }
     }else{
