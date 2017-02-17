@@ -24,6 +24,7 @@ module.exports = function(app){
   router.get('/resume/query', ctrl.resume.query);
   router.get('/resume/list', ctrl.resume.list);
   router.get('/resume/main', ctrl.resume.main);
+  router.get('/resume/delete', ctrl.resume.delete);
   router.post('/resume/save', ctrl.resume.save);
   router.post('/resume/create', ctrl.resume.create);
 

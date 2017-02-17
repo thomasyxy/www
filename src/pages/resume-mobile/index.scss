@@ -23,6 +23,16 @@ body{
   }
 }
 
+.view-page{
+  .view-container{
+    min-height: 500px;
+    .view-title{
+      font-size: 30px;
+      text-align: center;
+    }
+  }
+}
+
 .edit-page{
   display: flex;
   flex-direction: column;

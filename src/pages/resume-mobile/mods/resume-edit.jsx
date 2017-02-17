@@ -55,7 +55,6 @@ class ResumeEdit extends React.Component {
     this.checkResumeName = this.checkResumeName.bind(this);
     this.setNewResume = this.setNewResume.bind(this);
     this.handleDialogConfirm = this.handleDialogConfirm.bind(this);
-    this.setMainResume = this.setMainResume.bind(this);
     this._renderIconMenu = this._renderIconMenu.bind(this);
   }
 
@@ -105,7 +104,7 @@ class ResumeEdit extends React.Component {
       },
       body: JSON.stringify({
         name: 'yinxueyuan',
-        title: newResumeName,
+        title: this.state.newResumeName,
         text: this.state.mdeValue.text
       })
     })
@@ -134,9 +133,20 @@ class ResumeEdit extends React.Component {
       }
     }).then((res) => {
       res.json().then((res) => {
-        this.setState({
-          resumeList: res.data
-        })
+
+      })
+    })
+  }deleteResume
+
+  deleteResume(id) {
+    fetch(`/resume/delete?_id=${id}&username=yinxueyuan`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      res.json().then((res) => {
+
       })
     })
   }
@@ -179,24 +189,22 @@ class ResumeEdit extends React.Component {
     })
   }
 
-  handleDialogClose(cb) {
+  handleDialogClose() {
     this.setState({
       dialogVisible: false,
       dialogTitle: '',
       dialogContent: '',
       dialogActions: ''
     })
-    cb && cb()
   }
 
-  handleDialogOpen(title, content, actions, cb) {
+  handleDialogOpen(title, content, actions) {
     this.setState({
       dialogVisible: true,
       dialogTitle: title,
       dialogContent: content,
       dialogActions: actions
     })
-    cb && cb()
   }
 
   handleDialogConfirm() {
@@ -210,7 +218,7 @@ class ResumeEdit extends React.Component {
     return <IconMenu iconButtonElement={iconButtonElement}>
       <MenuItem primaryText="设为主简历" onClick={() => { this.setMainResume(id) }} />
       <MenuItem primaryText="下载" />
-      <MenuItem primaryText="删除" />
+      <MenuItem primaryText="删除" onClick={() => { this.deleteResume(id) }} />
     </IconMenu>
   }
 
@@ -241,7 +249,7 @@ class ResumeEdit extends React.Component {
       actions={dialogActions || actions}
       modal={false}
       open={dialogVisible}
-      contentStyle={{maxWidth: 400}}
+      contentStyle={{maxWidth: 400, minHeight: 180}}
       onRequestClose={this.handleDialogClose}
     >
       {dialogContent}
