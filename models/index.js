@@ -2,8 +2,8 @@
 const fs = require("fs");
 const path = require("path");
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
+const Schema = mongoose.Schema;
 
 //连接mongodb
 var dbname = G.C.dbName;
