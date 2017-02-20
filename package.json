@@ -37,6 +37,7 @@
     "koa-webpack-dev-middleware": "^1.2.2",
     "koa-webpack-hot-middleware": "^1.0.3",
     "marked": "^0.3.6",
+    "material-ui": "^0.17.0",
     "merge": "^1.2.0",
     "mongoose": "^4.8.1",
     "node-sass": "^3.11.2",
@@ -67,7 +68,6 @@
   },
   "devDependencies": {
     "fit-button": "^3.1.59",
-    "material-ui": "^0.16.7",
     "node-sass": "^3.11.2",
     "sass-loader": "^4.0.2",
     "webpack": "^1.13.3"
