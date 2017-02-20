@@ -65,7 +65,7 @@ class LoginPage extends React.Component {
             <TextField
               className="custom-input"
               hintText=""
-              floatingLabelText="UserName"
+              floatingLabelText="用户名"
               onChange={this.handleUsername}
             />
           </div>
@@ -74,7 +74,7 @@ class LoginPage extends React.Component {
               className="custom-input"
               hintText=""
               floatingLabelText="Password"
-              type="password"
+              type="密码"
               onChange={this.handlePassword}
             />
           </div>

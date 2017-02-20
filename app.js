@@ -10,6 +10,8 @@ require('shelljs/global')
 const koa = require('koa')
 const router = require('koa-router')
 const onerror = require('koa-onerror')
+const session = require('koa-session')
+const convert = require('koa-convert')
 const Jade = require('koa-jade')
 const webpack = require('webpack')
 const os = require('os')
@@ -50,7 +52,7 @@ const isDev = function(){
 const localUri = 'http://127.0.0.1'
 
 
-const app = koa()
+const app = new koa();
 
 const BuildStep = function(){
   var spinner = ora('building for production...')
@@ -94,9 +96,9 @@ const DevStep = function(){
     })
   })
 
-  app.use(devMiddleware)
+  app.use(convert(devMiddleware))
 
-  app.use(hotMiddleware)
+  app.use(convert(hotMiddleware))
 }
 
 const isBuild = Utils.dataFn.hasParam('build')
@@ -109,14 +111,24 @@ if(!isDebug) {
   isBuild || !isDev ? BuildStep() : DevStep()
 }
 
+// session
+app.keys = ['some secret hurr'];
+var CONFIG = {
+  key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+  maxAge: 86400000, /** (number) maxAge in ms (default is 1 days) */
+  overwrite: true, /** (boolean) can overwrite or not (default true) */
+  httpOnly: true, /** (boolean) httpOnly or not (default true) */
+  signed: true, /** (boolean) signed or not (default true) */
+};
+app.use(convert(session(CONFIG, app)));
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
 
 //静态资源文件
-app.use(staticCache('./public', {
+app.use(convert(staticCache('./public', {
   maxAge: 0
-}));
+})));
 
 const jade = new Jade({
   viewPath: __dirname + "/views",
@@ -147,16 +159,16 @@ onerror(app, {
 })
 
 //路由
-app.use(require('./configs/routers')())
+app.use(convert(require('./configs/routers')()))
 
-app.use(function*(next) {
+app.use(convert(function*(next) {
   yield next
   if (404 !== this.status) return;
   this.status = 404;
   this.render('404', {
     msg: 'Not Found'
   })
-})
+}))
 
 /**
  * 监听端口

@@ -9,15 +9,21 @@ import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import AccountBox from 'material-ui/svg-icons/Action/account-box';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {grey400, darkBlack, lightBlack, grey900} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
+import {grey400, darkBlack, lightBlack, grey900} from 'material-ui/styles/colors';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import AccountBox from 'material-ui/svg-icons/Action/account-box';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Visibility from 'material-ui/svg-icons/action/visibility';
+import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
+import ArrowUp from 'material-ui/svg-icons/Navigation/arrow-drop-up';
+
+
 
 import 'whatwg-fetch'
 
@@ -43,7 +49,9 @@ class ResumeEdit extends React.Component {
       dialogActions: '',
       dialogAllow: false,
       newResumeName: '',
-      curId: null
+      curId: null,
+      curTitle: null,
+      preview: false
     });
     this.saveResume = this.saveResume.bind(this);
     this.refreshCode = this.refreshCode.bind(this);
@@ -56,6 +64,7 @@ class ResumeEdit extends React.Component {
     this.setNewResume = this.setNewResume.bind(this);
     this.handleDialogConfirm = this.handleDialogConfirm.bind(this);
     this._renderIconMenu = this._renderIconMenu.bind(this);
+    this.togglePreview = this.togglePreview.bind(this);
   }
 
   componentWillMount() {
@@ -78,7 +87,8 @@ class ResumeEdit extends React.Component {
           selection: null
         },
         html: html,
-        curId: resume._id
+        curId: resume._id,
+        curTitle: resume.title
       })
     }
   }
@@ -136,7 +146,7 @@ class ResumeEdit extends React.Component {
 
       })
     })
-  }deleteResume
+  }
 
   deleteResume(id) {
     fetch(`/resume/delete?_id=${id}&username=yinxueyuan`, {
@@ -214,6 +224,12 @@ class ResumeEdit extends React.Component {
     })
   }
 
+  togglePreview() {
+    this.setState({
+      preview: !this.state.preview
+    })
+  }
+
   _renderIconMenu(id) {
     return <IconMenu iconButtonElement={iconButtonElement}>
       <MenuItem primaryText="设为主简历" onClick={() => { this.setMainResume(id) }} />
@@ -263,7 +279,9 @@ class ResumeEdit extends React.Component {
       html,
       drawerVisible,
       hasResumeName,
-      curId
+      curId,
+      curTitle,
+      preview
     } = this.state;
 
     const content = <TextField
@@ -273,31 +291,37 @@ class ResumeEdit extends React.Component {
 
     return (
       <div className="edit-page">
-        <div className="edit-option">
-          <RaisedButton label="保存" onClick={ curId ? this.saveResume : this.createResume } />
-          <RaisedButton label="简历箱" primary={true} onTouchTap={this.handleToggleVisible} />
-          <RaisedButton label="Secondary" secondary={true} />
+        <div className="edit-header">
+          <div className="edit-info">
+            <h1 className="info-title">{curTitle}</h1>
+          </div>
         </div>
         <div className="edit-content">
-          <div className="edit-slidebar">
-            <Paper className="edit-view markdown-body" style={{padding: 20}} zDepth={3} dangerouslySetInnerHTML={{__html: html}}>
-            </Paper>
-          </div>
+          {
+            preview ? <div className="edit-slidebar" key={0}>
+              <Paper className="edit-view markdown-body" style={{padding: 20}} zDepth={2} dangerouslySetInnerHTML={{__html: html}}>
+              </Paper>
+            </div> : <div key={1}></div>
+          }
           <div className="edit-section">
-    				<div className="editor">
+            <div className="editor">
                 <ReactMde
                   textareaId="ta1"
                   textareaName="ta1"
                   value={mdeValue}
                   onChange={this.refreshCode.bind(this)}
                   commands={ReactMdeCommands.getDefaultCommands()} />
-    				</div>
+            </div>
           </div>
+        </div>
+        <div className="edit-option">
+          <RaisedButton label="简历箱" primary={true} onTouchTap={this.handleToggleVisible} />
+          <RaisedButton label="保存" onClick={ curId ? this.saveResume : this.createResume } />
         </div>
         <Drawer
           className="edit-drawer"
           open={drawerVisible}
-          containerStyle={{position: 'absolute'}}
+          containerStyle={{position: 'absolute', overflow: 'hidden'}}
           onRequestChange={this.getResumeList}>
           <List className="edit-resume-list">
             {
@@ -316,8 +340,19 @@ class ResumeEdit extends React.Component {
               <ContentAdd />
             </FloatingActionButton>
           </List>
+          <div className="drawer-toggle" onClick={this.handleToggleVisible}>
+            <ArrowUp className="toggle-icon"/>
+          </div>
         </Drawer>
         { this._renderDialog() }
+        <div className="option-preview">
+          <Checkbox
+            checkedIcon={<Visibility />}
+            uncheckedIcon={<VisibilityOff />}
+            checked={preview}
+            onClick={this.togglePreview}
+          />
+        </div>
       </div>
     );
   }

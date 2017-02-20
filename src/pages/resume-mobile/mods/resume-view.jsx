@@ -25,7 +25,7 @@ class ResumeView extends React.Component {
       className="view-container markdown-body"
       style={{padding: 20}}
       zDepth={3}>
-      <p className="view-title">{resume.title}</p>
+      <h1 className="view-title">{resume.title}</h1>
       <div className="view-content" dangerouslySetInnerHTML={{__html: html}}></div>
     </Paper>
   }

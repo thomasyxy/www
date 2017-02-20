@@ -17,7 +17,7 @@ const styles = {
     fontWeight: 400,
   },
   slide: {
-    padding: 10,
+    padding: 10
   },
 };
 
@@ -26,11 +26,9 @@ class ResumePage extends React.Component {
     super(props);
     this.state = assign({}, props, {
       pageName: 'view',
-      slideIndex: 0,
       resume: null,
       serverResult: true
     });
-    this.handleChange = this.handleChange.bind(this);
     this.showResume = this.showResume.bind(this);
   }
 
@@ -60,12 +58,6 @@ class ResumePage extends React.Component {
     })
   }
 
-  handleChange(value) {
-    this.setState({
-      slideIndex: value,
-    });
-  };
-
   showResume(resume) {
     this.setState({
       resume: resume
@@ -81,7 +73,7 @@ class ResumePage extends React.Component {
 
     const TabConfig = [
       {
-        title: '简历预览',
+        title: '简历主页',
         view: <ResumeView resume={resume} />
       },
       {
@@ -91,24 +83,20 @@ class ResumePage extends React.Component {
     ];
 
     return <div className="resume-page">
-      <Tabs onChange={this.handleChange} value={this.state.slideIndex}>
+      <Tabs onChange={this.handleChange} value={this.state.slideIndex} contentContainerStyle={{height: '92vh'}}>
         {
           TabConfig.map((val, key) =>
-            <Tab label={val.title} value={key} key={key}/>
+            <Tab label={val.title} value={key} key={key}>
+              {
+                serverResult ?
+                    <div className="resume-part">
+                      {resume ? val.view : ''}
+                    </div> : <ResumeError />
+              }
+            </Tab>
           )
         }
       </Tabs>
-      <SwipeableViews className="resume-slider" index={this.state.slideIndex} onChangeIndex={this.handleChange}>
-        {
-          serverResult ?
-            resume && TabConfig && TabConfig.length > 0 ? TabConfig.map((val, key) =>
-              <div className="resume-part" style={styles.slide} key={key}>
-                {val.view}
-              </div>
-            ) : ''
-           : <ResumeError />
-        }
-      </SwipeableViews>
     </div>
   }
 }
