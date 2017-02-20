@@ -9,7 +9,6 @@ import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
-import BackSpace from 'material-ui/svg-icons/Content/backspace';
 
 class RegisterPage extends React.Component {
   constructor (props) {
