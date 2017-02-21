@@ -17,8 +17,8 @@
       "host" : "114.215.158.62",
       "ref"  : "origin/master",
       "repo" : "git@github.com:thomasyxy/www.git",
-      "path" : "/alidata/www/www",
-      "post-deploy" : "bash /alidata/www/www/current/deploy.sh"
+      "path" : "/node/www",
+      "post-deploy" : "bash /node/www/current/deploy.sh"
     }
   }
 }

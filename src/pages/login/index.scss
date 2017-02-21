@@ -10,6 +10,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  .register-message{
+    text-align: center;
+  }
 }
 
 .page-option{
@@ -48,8 +51,5 @@
     .register-next{
       order: 0;
     }
-  }
-  .register-message{
-    text-align: center;
   }
 }
