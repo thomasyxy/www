@@ -28,17 +28,28 @@ class LoginPage extends React.Component {
   handleClickLogin() {
     const {
       username,
-      password
+      password,
+      successUrl
     } = this.state;
 
     fetch('/user/login', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         username: username,
         password: password
+      })
+    }).then((res) => {
+      res.json().then((res) => {
+        this.state.handleShowMessage(res.message);
+        if(res.success){
+          setTimeout(function() {
+            window.location.href = successUrl;
+          }, 2000);
+        }
       })
     })
   };

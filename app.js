@@ -11,7 +11,6 @@ const koa = require('koa')
 const router = require('koa-router')
 const onerror = require('koa-onerror')
 const session = require('koa-session')
-const convert = require('koa-convert')
 const Jade = require('koa-jade')
 const webpack = require('webpack')
 const os = require('os')
@@ -96,9 +95,9 @@ const DevStep = function(){
     })
   })
 
-  app.use(convert(devMiddleware))
+  app.use(devMiddleware)
 
-  app.use(convert(hotMiddleware))
+  app.use(hotMiddleware)
 }
 
 const isBuild = Utils.dataFn.hasParam('build')
@@ -114,21 +113,22 @@ if(!isDebug) {
 // session
 app.keys = ['some secret hurr'];
 var CONFIG = {
-  key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
+  key: 'userid', /** (string) cookie key (default is koa:sess) */
   maxAge: 86400000, /** (number) maxAge in ms (default is 1 days) */
   overwrite: true, /** (boolean) can overwrite or not (default true) */
   httpOnly: true, /** (boolean) httpOnly or not (default true) */
   signed: true, /** (boolean) signed or not (default true) */
 };
-app.use(convert(session(CONFIG, app)));
+app.use(session(CONFIG, app));
+
 
 //接口代理
 // request(G.C.apiProxy).middleWare(app);
 
 //静态资源文件
-app.use(convert(staticCache('./public', {
+app.use(staticCache('./public', {
   maxAge: 0
-})));
+}));
 
 const jade = new Jade({
   viewPath: __dirname + "/views",
@@ -159,16 +159,16 @@ onerror(app, {
 })
 
 //路由
-app.use(convert(require('./configs/routers')()))
+app.use(require('./configs/routers')())
 
-app.use(convert(function*(next) {
+app.use(function*(next) {
   yield next
   if (404 !== this.status) return;
   this.status = 404;
   this.render('404', {
     msg: 'Not Found'
   })
-}))
+})
 
 /**
  * 监听端口

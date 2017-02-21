@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Snackbar from 'material-ui/Snackbar';
 
 class RegisterPage extends React.Component {
   constructor (props) {
@@ -17,9 +16,7 @@ class RegisterPage extends React.Component {
       stepIndex: 0,
       username: '',
       password: '',
-      passwordRepeat: '',
-      snackbarVisible: false,
-      snackbarMessage: ''
+      passwordRepeat: ''
     });
 
     this.handleNext = this.handleNext.bind(this);
@@ -28,7 +25,6 @@ class RegisterPage extends React.Component {
     this.handleInputUsername = this.handleInputUsername.bind(this);
     this.handleInputPassword = this.handleInputPassword.bind(this);
     this.handleCheckPassword = this.handleCheckPassword.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
 
   }
 
@@ -36,22 +32,28 @@ class RegisterPage extends React.Component {
   }
 
   registerRequest() {
+    const {
+      username,
+      password,
+      successUrl
+    } = this.state;
+
     fetch(`/user/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
+        username: username,
+        password: password
       })
 
     }).then((res) => {
       res.json().then((res) => {
-        this.handleShowMessage(res.message);
-        if(res.success){
-          setTimeout(() =>{
-            this.state.selectPage('login')
+        this.state.handleShowMessage(res.message);
+        if(res.success && res.data._id){
+          setTimeout(function() {
+            window.location.href = successUrl;
           }, 2000);
         }
       })
@@ -112,25 +114,11 @@ class RegisterPage extends React.Component {
         throw new Error('两次输入的密码不一致，请重新确认')
       }
     }catch(e){
-      this.handleShowMessage(e.message);
+      this.state.handleShowMessage(e.message);
       return false
     }
 
     this.registerRequest();
-  }
-
-  handleShowMessage(text) {
-    this.setState({
-      snackbarVisible: true,
-      snackbarMessage: text
-    })
-  }
-
-  handleRequestClose() {
-    this.setState({
-      snackbarVisible: false,
-      snackbarMessage: ''
-    })
   }
 
   render() {
@@ -138,9 +126,7 @@ class RegisterPage extends React.Component {
       stepIndex,
       username,
       password,
-      passwordRepeat,
-      snackbarVisible,
-      snackbarMessage
+      passwordRepeat
     } = this.state;
 
     const stepConfig = [
@@ -213,13 +199,6 @@ class RegisterPage extends React.Component {
             onTouchTap={stepIndex >= stepConfig.length - 1 ? this.handleSubmit : this.handleNext}
           />
         </div>
-        <Snackbar
-          className="register-message"
-          open={this.state.snackbarVisible}
-          message={snackbarMessage}
-          autoHideDuration={2000}
-          onRequestClose={this.handleRequestClose}
-        />
       </Paper>
     );
   }

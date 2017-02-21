@@ -15,12 +15,16 @@ module.exports = {
   },
 
   center: function *(next){
-    this.render('login', {
-      title: 'login',
-      data: {
-        msg: 'login'
-      }
-    })
+    if(this.session.token){
+      this.render('lab/resume-mobile', {
+        title: '移动端简历'
+      })
+    }else{
+      this.render('login', {
+        title: '登录'
+      })
+    }
+
     yield next
   },
 

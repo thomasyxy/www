@@ -2,6 +2,29 @@
 const fs = require('fs');
 const path = require('path');
 const parse = require('co-body');
+const jwt = require('jwt-simple');
+
+const secret = 'never give up';
+
+let generateToken = function(obj) {
+  return jwt.encode(obj, secret);
+}
+
+let setUserData = function *(ctx, sessionId, token){
+    //回写cookie
+    console.log(sessionId);
+    var aDay = 24 * 60 * 60 * 1000;
+    ctx.cookies.set('SESSION', sessionId, {
+        expires: new Date(new Date().getTime() + aDay),
+        path: '/',
+        httpOnly: true
+    })
+    ctx.cookies.set('TOKEN', token, {
+        expires: new Date(new Date().getTime() + aDay),
+        path: '/',
+        httpOnly: true
+    })
+}
 
 let registerNewUser = function *(model, data) {
   let result = {};
@@ -89,6 +112,7 @@ let userIdentityVerify = function *(model, query) {
     if(res.data[0].password === query.password){
       result.success = true;
       result.message = '登录成功';
+      result.data = res.data[0]
     }else{
       result.success = false;
       result.message = '密码错误';
@@ -98,9 +122,19 @@ let userIdentityVerify = function *(model, query) {
   return result;
 }
 
-
-
 module.exports = {
+  signIn: function *(next){
+    if(this.session.token){
+      this.redirect('/resume/mobile', {
+        title: '移动端简历'
+      })
+    }else{
+      this.render('login', {
+        title: '登录'
+      })
+    }
+    yield next
+  },
   register: function *(next){
     let result = {},
         post = yield parse(this.request),
@@ -168,7 +202,11 @@ module.exports = {
     }
 
     if(result.success === true){
-      this.cookies.set('username', username);
+      let token = generateToken({username: result.data.username, password: result.data.password});
+      let sessionId = result.data._id;
+      yield setUserData(this, sessionId, token);
+      this.session.token = token;
+      this.session.username = username;
     }
 
     this.body = result;
