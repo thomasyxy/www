@@ -19,11 +19,20 @@
   font-size: 14px;
 }
 
+.register-message{
+  text-align: center;
+}
+
 .resume-part{
   position: relative;
 }
 
 .view-page{
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  margin: 0 auto;
+  max-width: 800px;
   .view-container{
     min-height: 500px;
     .view-title{

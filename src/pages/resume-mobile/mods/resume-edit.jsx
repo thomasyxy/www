@@ -17,6 +17,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import {grey400, darkBlack, lightBlack, grey900} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import AddCircle from 'material-ui/svg-icons/content/add-circle';
 import AccountBox from 'material-ui/svg-icons/Action/account-box';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Visibility from 'material-ui/svg-icons/action/visibility';
@@ -94,70 +95,136 @@ class ResumeEdit extends React.Component {
   }
 
   saveResume() {
+    const {
+      curId,
+      mdeValue,
+      handleShowMessage
+    } = this.state;
     fetch('/resume/save', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        id: this.state.curId,
-        text: this.state.mdeValue.text
+        id: curId,
+        text: mdeValue.text
+      })
+    }).then(function(res) {
+      res.json().then((res) => {
+        handleShowMessage(res.message);
       })
     })
   }
 
   createResume() {
+    const {
+      newResumeName,
+      mdeValue,
+      resumeList,
+      handleShowMessage
+    } =this.state;
     fetch('/resume/create', {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'yinxueyuan',
-        title: this.state.newResumeName,
-        text: this.state.mdeValue.text
+        title: newResumeName,
+        text: mdeValue.text
       })
+    }).then((res) => {
+      res.json().then((res) => {
+        if(res.success && res.data){
+          resumeList.push(res.data);
+          this.setState({
+            resumeList: resumeList,
+            curId: res.data._id
+          })
+          handleShowMessage(res.message);
+        }else{
+          handleShowMessage(res.message || '接口异常');
+        }
+      })
+    }).catch((err) => {
+      handleShowMessage(err);
     })
   }
 
   getResumeList() {
-    fetch('/resume/list?username=yinxueyuan', {
+    const {
+      handleShowMessage
+    } = this.state;
+    fetch('/resume/list', {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((res) => {
       res.json().then((res) => {
-        this.setState({
-          resumeList: res.data
-        })
+        if(res.success && res.data){
+          this.setState({
+            resumeList: res.data
+          })
+        }else{
+          handleShowMessage(res.message || '接口异常');
+        }
       })
+    }).catch((err) => {
+      handleShowMessage(err || '请求失败');
     })
   }
 
   setMainResume(id) {
-    fetch(`/resume/main?_id=${id}&username=yinxueyuan`, {
+    const {
+      handleShowMessage
+    } = this.state;
+    fetch(`/resume/main?_id=${id}`, {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((res) => {
       res.json().then((res) => {
-
+        if(res.success){
+          handleShowMessage(res.message);
+        }else{
+          handleShowMessage(res.message || '接口异常');
+        }
       })
+    }).catch((err) => {
+      handleShowMessage(err || '请求失败');
     })
   }
 
-  deleteResume(id) {
-    fetch(`/resume/delete?_id=${id}&username=yinxueyuan`, {
+  deleteResume(id, key) {
+    const {
+      handleShowMessage,
+      resumeList
+    } = this.state;
+    fetch(`/resume/delete?_id=${id}`, {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((res) => {
       res.json().then((res) => {
-
+        if(res.success){
+          resumeList.splice(key, 1);
+          this.setState({
+            resumeList: resumeList
+          })
+          handleShowMessage(res.message);
+        }else{
+          handleShowMessage(res.message || '接口异常');
+        }
       })
+    }).catch((err) => {
+      handleShowMessage(err || '请求失败');
     })
   }
 
@@ -230,11 +297,10 @@ class ResumeEdit extends React.Component {
     })
   }
 
-  _renderIconMenu(id) {
+  _renderIconMenu(id, key) {
     return <IconMenu iconButtonElement={iconButtonElement}>
       <MenuItem primaryText="设为主简历" onClick={() => { this.setMainResume(id) }} />
-      <MenuItem primaryText="下载" />
-      <MenuItem primaryText="删除" onClick={() => { this.deleteResume(id) }} />
+      <MenuItem primaryText="删除" onClick={() => { this.deleteResume(id, key) }} />
     </IconMenu>
   }
 
@@ -281,7 +347,8 @@ class ResumeEdit extends React.Component {
       hasResumeName,
       curId,
       curTitle,
-      preview
+      preview,
+      newResumeName
     } = this.state;
 
     const content = <TextField
@@ -293,7 +360,7 @@ class ResumeEdit extends React.Component {
       <div className="edit-page">
         <div className="edit-header">
           <div className="edit-info">
-            <h1 className="info-title">{curTitle}</h1>
+            <h1 className="info-title">{newResumeName || curTitle}</h1>
           </div>
         </div>
         <div className="edit-content">
@@ -320,10 +387,11 @@ class ResumeEdit extends React.Component {
         </div>
         <Drawer
           className="edit-drawer"
+          docked={false}
           open={drawerVisible}
           containerStyle={{position: 'absolute', overflow: 'hidden'}}
-          onRequestChange={this.getResumeList}>
-          <List className="edit-resume-list">
+          onRequestChange={this.handleToggleVisible}>
+          <List className="edit-resume-list" style={{paddingRight: 12}}>
             {
               resumeList.length > 0 ? resumeList.map((val, key) =>
                 <ListItem
@@ -331,10 +399,16 @@ class ResumeEdit extends React.Component {
                   key={key}
                   primaryText={<p className="edit-resume-title">{val.title}</p>}
                   leftIcon={<AccountBox color={ curId === val._id ? grey900 : grey400 }/>}
-                  rightIconButton={this._renderIconMenu(val._id)}
+                  rightIconButton={this._renderIconMenu(val._id, key)}
                   onClick={() => { this.loadResume(val) }}
                 />
-            ) : <ListItem className="edit-resume-blank" primaryText="暂无简历，立即添加" />
+            ) : <ListItem
+                className="edit-resume-blank"
+                primaryText="暂无简历，立即添加"
+                rightIcon={<AddCircle color={grey900} />}
+                innerDivStyle={{textAlign: 'center'}}
+                onClick={() => { this.handleDialogOpen(null, content) }}
+              />
             }
             <FloatingActionButton className="edit-resume-add" onClick={() => { this.handleDialogOpen(null, content) }}>
               <ContentAdd />
