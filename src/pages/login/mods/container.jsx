@@ -69,12 +69,14 @@ class Container extends React.Component {
     ]
 
     return <div className="page-container">
-      <div className="page-option">
-        {
-          optionConfig.map((val, key) =>
-            curPage !== val.name ? <span key={key} onClick={() => { this.selectPage(val.name) }}>{val.title}</span> : ''
-          )
-        }
+      <div className="page-header">
+        <div className="page-option">
+          {
+            optionConfig.map((val, key) =>
+              curPage !== val.name ? <span key={key} onClick={() => { this.selectPage(val.name) }}>{val.title}</span> : ''
+            )
+          }
+        </div>
       </div>
       {
         optionConfig.map((val, key) =>

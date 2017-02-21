@@ -18,11 +18,11 @@ import Checkbox from 'material-ui/Checkbox';
 import {grey400, darkBlack, lightBlack, grey900} from 'material-ui/styles/colors';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import AddCircle from 'material-ui/svg-icons/content/add-circle';
-import AccountBox from 'material-ui/svg-icons/Action/account-box';
+import AccountBox from 'material-ui/svg-icons/action/account-box';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
-import ArrowUp from 'material-ui/svg-icons/Navigation/arrow-drop-up';
+import ArrowUp from 'material-ui/svg-icons/navigation/arrow-drop-up';
 
 
 
