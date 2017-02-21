@@ -15,10 +15,25 @@
   }
 }
 
-.page-option{
-  position: absolute;
+.page-header{
+  $height: 40px;
+  position: fixed;
+  width: 100%;
+  height: $height;
   top: 0;
-  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  cursor: pointer;
+  &:hover{
+    color: #00bcd4;
+  }
+  .page-option{
+    line-height: $height;
+  }
 }
 
 .login-container{
