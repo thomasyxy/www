@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import SwipeableViews from 'react-swipeable-views';
+import Snackbar from 'material-ui/Snackbar';
 import 'whatwg-fetch'
 
 import ResumeView from './resume-view';
@@ -27,9 +27,14 @@ class ResumePage extends React.Component {
     this.state = assign({}, props, {
       pageName: 'view',
       resume: null,
-      serverResult: true
+      serverResult: true,
+      snackbarVisible: false,
+      snackbarMessage: '',
+      defaultValue: {text: "", selection: null}
     });
     this.showResume = this.showResume.bind(this);
+    this.handleShowMessage = this.handleShowMessage.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   componentWillMount() {
@@ -45,10 +50,8 @@ class ResumePage extends React.Component {
       }
     }).then((res) => {
       res.json().then((res) => {
-        if(res.success){
-          if(res.data && res.data.length > 0){
-            this.showResume(res.data[0])
-          }
+        if(res.success && res.data){
+          this.showResume(res.data[0] || this.state.defaultValue)
         }else{
           this.setState({
             serverResult: false
@@ -64,11 +67,27 @@ class ResumePage extends React.Component {
     })
   }
 
+  handleShowMessage(text) {
+    this.setState({
+      snackbarVisible: true,
+      snackbarMessage: text
+    })
+  }
+
+  handleRequestClose() {
+    this.setState({
+      snackbarVisible: false,
+      snackbarMessage: ''
+    })
+  }
+
   render() {
     const {
       pageName,
       resume,
-      serverResult
+      serverResult,
+      snackbarVisible,
+      snackbarMessage
     } = this.state;
 
     const TabConfig = [
@@ -78,7 +97,7 @@ class ResumePage extends React.Component {
       },
       {
         title: '简历编辑',
-        view: <ResumeEdit resume={resume} showResume={this.showResume} />
+        view: <ResumeEdit resume={resume} showResume={this.showResume} handleShowMessage={this.handleShowMessage} />
       }
     ];
 
@@ -97,6 +116,13 @@ class ResumePage extends React.Component {
           )
         }
       </Tabs>
+      <Snackbar
+        className="register-message"
+        open={this.state.snackbarVisible}
+        message={snackbarMessage}
+        autoHideDuration={2000}
+        onRequestClose={this.handleRequestClose}
+      />
     </div>
   }
 }

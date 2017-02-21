@@ -147,7 +147,7 @@ module.exports = {
 
   list: function *(next) {
     let result = {},
-        name = this.query.username;
+        name = this.session.username;
     if(name){
       let Resume = G.M('resume');
       result = yield findUserResume(Resume, name);
@@ -164,7 +164,7 @@ module.exports = {
   main: function *(next) {
     let result = {},
         _id = this.query._id,
-        name = this.query.username;
+        name = this.session.username;
     if(_id && name){
       let Resume = G.M('resume');
       result = yield findMainResume(Resume, name);
@@ -172,6 +172,7 @@ module.exports = {
         result =  yield saveResume(Resume, {_id: result.data._id}, {main: 0})
         if(result.success){
           result = yield saveResume(Resume, {_id: _id}, {main: 1})
+          result.message = "设置主简历成功";
         }
       }
     }else{
@@ -187,7 +188,7 @@ module.exports = {
   delete: function *(next){
     let result = {},
         _id = this.query._id,
-        name = this.query.username;
+        name = this.session.username;
 
     if(_id){
       let Resume = G.M('resume');
@@ -198,7 +199,7 @@ module.exports = {
       result = yield deleteResume(Resume, query);
 
       if(result.success){
-        result = yield resetMainResume(Resume, {username: name});
+        yield resetMainResume(Resume, {username: name});
       }
     }
 
@@ -232,7 +233,7 @@ module.exports = {
   create: function *(next){
     let result = {},
         post = yield parse(this.request),
-        name = post.name,
+        name = this.session.username,
         text = post.text;
 
     if( name && text ){
