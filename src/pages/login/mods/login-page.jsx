@@ -29,7 +29,8 @@ class LoginPage extends React.Component {
     const {
       username,
       password,
-      successUrl
+      successUrl,
+      handleShowMessage
     } = this.state;
 
     fetch('/user/login', {
