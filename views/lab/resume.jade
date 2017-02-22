@@ -1,15 +1,15 @@
 extends ../template/layout.jade
 
 block afterhead
+  link(rel="stylesheet" href="/static/css/resume.css")
 block content
   div#container
     - if(html)
       .extra
-        span.create #{createDate}
-        span.update #{updateDate}
-        h1.title #{title}
-      .markdown-body
-        | !{html}
+        span.update 更新时间：#{1900 + updateDate.getYear()}/#{updateDate.getMonth() + 1}/#{updateDate.getDate()}
+      .resume-container
+        .markdown-body
+          | !{html}
     - else
       .not-found 该简历不存在或已被删除
     
