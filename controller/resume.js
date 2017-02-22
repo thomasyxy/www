@@ -1,5 +1,7 @@
 "use strict"
 const parse = require('co-body');
+const Remarkable = require('remarkable');
+const md = new Remarkable('full');
 
 let queryResume = function *(model, query) {
   let result = {};
@@ -27,7 +29,7 @@ let findMainResume = function *(model, name) {
       result.message = err;
     }else{
       result.success = true;
-      result.data = res[0];
+      result.data = res;
       if(res && res.length > 0){
         result.message = '已找到主简历';
         result.state = 0;
@@ -122,26 +124,33 @@ let resetMainResume = function *(model, query) {
 }
 
 module.exports = {
+  index: function *(next) {
+    let _id = this.query._id,
+        Resume = G.M('resume'),
+        resume = yield Resume.find({_id: _id});
 
+    let data = resume[0] ? {
+      title: resume[0].title,
+      html: md.render(resume[0].text),
+      createDate: resume[0].createDate,
+      updateDate: resume[0].updateDate
+    } : {
+      title: '未找到该简历'
+    }
+
+    this.render('lab/resume', data)
+  },
   mobile: function *(next){
     // var data = yield this.fetch('home_data', {}, {})
     if(this.session.token){
       this.render('lab/resume-mobile', {
-        title: '移动端简历'
+        title: 'MD简历盒子'
       })
     }else{
       this.redirect('/signIn', {
         title: '登录'
       })
     }
-    yield next
-  },
-
-  query: function *(next){
-    let Resume = G.M('resume'),
-        result = yield queryResume(Resume, this.query);
-
-    this.body = result;
     yield next
   },
 
@@ -160,16 +169,24 @@ module.exports = {
     this.body = result
     yield next
   },
+  getMain: function *(next) {
+    let result = {},
+        name = this.session.username,
+        Resume = G.M('resume');
+    result = yield findMainResume(Resume, name);
 
-  main: function *(next) {
+    this.body = result;
+    yield next
+  },
+  setMain: function *(next) {
     let result = {},
         _id = this.query._id,
         name = this.session.username;
     if(_id && name){
       let Resume = G.M('resume');
       result = yield findMainResume(Resume, name);
-      if(result.data){
-        result =  yield saveResume(Resume, {_id: result.data._id}, {main: 0})
+      if(result.data && result.data.length > 0){
+        result =  yield saveResume(Resume, {_id: result.data[0]._id}, {main: 0})
         if(result.success){
           result = yield saveResume(Resume, {_id: _id}, {main: 1})
           result.message = "设置主简历成功";
@@ -243,13 +260,14 @@ module.exports = {
         text: text,
         createDate: Date.parse(new Date),
         updateDate: Date.parse(new Date),
-        title: post.title || `${name}的简历`
+        title: post.title || `${name}的简历`,
+        main: 0
       }
       result = yield findMainResume(Resume, data.username);
-      if(result.success){
-        data.main = result.state;
-        result = yield createResume(Resume, data);
+      if(result.data && result.data.length === 0){
+        data.main = 1;
       }
+      result = yield createResume(Resume, data);
     }else{
       result.success = false;
       result.message = '参数异常';

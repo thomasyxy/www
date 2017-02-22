@@ -13,6 +13,7 @@ module.exports = function(app){
 
   // router.get('/user/signUp', ctrl.user.signUp);
   router.get('/signIn', ctrl.user.signIn);
+  router.get('/user/exist', ctrl.user.exist);
   router.post('/user/register', ctrl.user.register);
   router.post('/user/login', ctrl.user.login);
 
@@ -22,10 +23,11 @@ module.exports = function(app){
   router.get('/vueapp/jsonp', ctrl.vueapp.jsonp);
   router.get('/vueapp/normal', ctrl.vueapp.normal);
 
+  router.get('/resume', ctrl.resume.index);
   router.get('/resume/mobile', ctrl.resume.mobile);
-  router.get('/resume/query', ctrl.resume.query);
   router.get('/resume/list', ctrl.resume.list);
-  router.get('/resume/main', ctrl.resume.main);
+  router.get('/resume/getMain', ctrl.resume.getMain);
+  router.get('/resume/setMain', ctrl.resume.setMain);
   router.get('/resume/delete', ctrl.resume.delete);
   router.post('/resume/save', ctrl.resume.save);
   router.post('/resume/create', ctrl.resume.create);

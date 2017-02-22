@@ -1,0 +1,17 @@
+extends ../template/layout.jade
+
+block afterhead
+block content
+  div#container
+    - if(html)
+      .extra
+        span.create #{createDate}
+        span.update #{updateDate}
+        h1.title #{title}
+      .markdown-body
+        | !{html}
+    - else
+      .not-found 该简历不存在或已被删除
+    
+block afterbody
+  script.

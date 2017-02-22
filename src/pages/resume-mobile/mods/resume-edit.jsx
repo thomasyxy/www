@@ -114,6 +114,8 @@ class ResumeEdit extends React.Component {
       res.json().then((res) => {
         handleShowMessage(res.message);
       })
+    }).catch((e) => {
+      handleShowMessage(e.message || '请求失败');
     })
   }
 
@@ -147,8 +149,8 @@ class ResumeEdit extends React.Component {
           handleShowMessage(res.message || '接口异常');
         }
       })
-    }).catch((err) => {
-      handleShowMessage(err);
+    }).catch((e) => {
+      handleShowMessage(e.message || '请求失败');
     })
   }
 
@@ -172,8 +174,8 @@ class ResumeEdit extends React.Component {
           handleShowMessage(res.message || '接口异常');
         }
       })
-    }).catch((err) => {
-      handleShowMessage(err || '请求失败');
+    }).catch((e) => {
+      handleShowMessage(e.message || '请求失败');
     })
   }
 
@@ -181,7 +183,7 @@ class ResumeEdit extends React.Component {
     const {
       handleShowMessage
     } = this.state;
-    fetch(`/resume/main?_id=${id}`, {
+    fetch(`/resume/setMain?_id=${id}`, {
       method: 'GET',
       credentials: 'same-origin',
       headers: {
@@ -195,8 +197,8 @@ class ResumeEdit extends React.Component {
           handleShowMessage(res.message || '接口异常');
         }
       })
-    }).catch((err) => {
-      handleShowMessage(err || '请求失败');
+    }).catch((e) => {
+      handleShowMessage(e.message || '请求失败');
     })
   }
 
@@ -223,8 +225,8 @@ class ResumeEdit extends React.Component {
           handleShowMessage(res.message || '接口异常');
         }
       })
-    }).catch((err) => {
-      handleShowMessage(err || '请求失败');
+    }).catch((e) => {
+      handleShowMessage(e.message || '请求失败');
     })
   }
 
@@ -299,6 +301,7 @@ class ResumeEdit extends React.Component {
 
   _renderIconMenu(id, key) {
     return <IconMenu iconButtonElement={iconButtonElement}>
+      <MenuItem primaryText="打开" onClick={() => { window.open(`/resume/?_id=${id}`) }} />
       <MenuItem primaryText="设为主简历" onClick={() => { this.setMainResume(id) }} />
       <MenuItem primaryText="删除" onClick={() => { this.deleteResume(id, key) }} />
     </IconMenu>
