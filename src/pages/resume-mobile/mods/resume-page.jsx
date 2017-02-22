@@ -21,6 +21,30 @@ const styles = {
   },
 };
 
+const INTRO = `### MD简历箱项目
+
+* 支持[markdown语法](http://younghz.github.io/Markdown)
+
+* 管理简历
+
+* 快速在线编辑
+
+###### 支持操作：
+创建简历、保存简历、删除简历、设置主简历（显示在简历主页，优先级较高）、直接创建链接，在线编辑、显示/隐藏预览界面。
+
+###### 涉及技术：
+
+1.前端使用 \`react\` + \`webpack\` 快速构建项目
+
+2.使用的组件库为 [Material-UI](http://www.material-ui.com/#/)
+
+3.后端用 node.js + Koa 框架 + jade 模板引擎
+
+4.使用 MongoDB 作为数据库
+
+**项目地址: [github](https://github.com/thomasyxy/www)**
+`
+
 class ResumePage extends React.Component {
   constructor (props) {
     super(props);
@@ -30,7 +54,7 @@ class ResumePage extends React.Component {
       serverResult: true,
       snackbarVisible: false,
       snackbarMessage: '',
-      defaultValue: {text: "", selection: null}
+      defaultValue: {text: INTRO, selection: null}
     });
     this.showResume = this.showResume.bind(this);
     this.handleShowMessage = this.handleShowMessage.bind(this);
