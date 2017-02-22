@@ -35,7 +35,8 @@ class RegisterPage extends React.Component {
     const {
       username,
       password,
-      successUrl
+      successUrl,
+      handleShowMessage
     } = this.state;
 
     fetch(`/user/register`, {
@@ -50,20 +51,54 @@ class RegisterPage extends React.Component {
 
     }).then((res) => {
       res.json().then((res) => {
-        this.state.handleShowMessage(res.message);
         if(res.success && res.data._id){
+          handleShowMessage(`${res.message}，即将跳转`);
           setTimeout(function() {
             window.location.href = successUrl;
           }, 2000);
+        }else{
+          handleShowMessage(res.message || '接口异常');
         }
       })
+    }).catch((e) => {
+      handleShowMessage(e.message);
     })
   }
 
   handleNext() {
-    this.setState({
-      stepIndex: this.state.stepIndex + 1
-    })
+    const {
+      stepIndex,
+      username,
+      handleShowMessage
+    } = this.state;
+    if(stepIndex === 0){
+      fetch(`/user/exist?username=${username}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        res.json().then((res) => {
+          if(res.success && res.data){
+            if(res.data.length === 0){
+              this.setState({
+                stepIndex: stepIndex + 1
+              })
+            }else{
+              handleShowMessage(res.message);
+            }
+          }else{
+            handleShowMessage(res.message || '接口异常');
+          }
+        })
+      }).catch((e) => {
+        handleShowMessage(e.message);
+      })
+    }else{
+      this.setState({
+        stepIndex: stepIndex + 1
+      })
+    }
   }
 
   handleBack() {

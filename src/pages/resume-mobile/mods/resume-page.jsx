@@ -43,8 +43,9 @@ class ResumePage extends React.Component {
 
 
   getMainResume() {
-    fetch('/resume/query?main=1', {
+    fetch('/resume/getMain', {
       method: 'GET',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       }
