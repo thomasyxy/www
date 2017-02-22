@@ -159,7 +159,7 @@ module.exports = {
         name = this.session.username;
     if(name){
       let Resume = G.M('resume');
-      result = yield findUserResume(Resume, name);
+      result = yield findUserResume(Resume, {username: name});
     }else{
       result.success = false;
       result.message = '参数异常';
