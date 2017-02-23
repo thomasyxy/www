@@ -425,10 +425,10 @@ class ResumeEdit extends React.Component {
                 onClick={() => { this.handleDialogOpen(null, content) }}
               />
             }
-            <FloatingActionButton className="edit-resume-add" onClick={() => { this.handleDialogOpen(null, content) }}>
-              <ContentAdd />
-            </FloatingActionButton>
           </List>
+          <FloatingActionButton className="edit-resume-add" onClick={() => { this.handleDialogOpen(null, content) }}>
+            <ContentAdd />
+          </FloatingActionButton>
           <div className="drawer-toggle" onClick={this.handleToggleVisible}>
             <ArrowUp className="toggle-icon"/>
           </div>

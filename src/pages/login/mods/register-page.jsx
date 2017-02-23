@@ -65,39 +65,91 @@ class RegisterPage extends React.Component {
     })
   }
 
-  handleNext() {
+  verifyUsername() {
     const {
       stepIndex,
       username,
       handleShowMessage
     } = this.state;
-    if(stepIndex === 0){
-      fetch(`/user/exist?username=${username}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => {
-        res.json().then((res) => {
-          if(res.success && res.data){
-            if(res.data.length === 0){
-              this.setState({
-                stepIndex: stepIndex + 1
-              })
-            }else{
-              handleShowMessage(res.message);
-            }
+
+    try{
+      if(username.length === 0){
+        throw new Error('用户名不能为空')
+      }
+      if(username.length > 10){
+        throw new Error('用户名不能超过10个字符')
+      }
+    }catch(e){
+      this.state.handleShowMessage(e.message);
+      return false
+    }
+
+    fetch(`/user/exist?username=${username}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      res.json().then((res) => {
+        if(res.success && res.data){
+          if(res.data.length === 0){
+            this.setState({
+              stepIndex: stepIndex + 1
+            })
           }else{
-            handleShowMessage(res.message || '接口异常');
+            handleShowMessage(res.message);
           }
-        })
-      }).catch((e) => {
-        handleShowMessage(e.message);
+        }else{
+          handleShowMessage(res.message || '接口异常');
+        }
       })
-    }else{
-      this.setState({
-        stepIndex: stepIndex + 1
-      })
+    }).catch((e) => {
+      handleShowMessage(e.message);
+    })
+  }
+
+  verifyPassword() {
+    const {
+      stepIndex,
+      password,
+      handleShowMessage
+    } = this.state;
+
+    try{
+      if(password.length === 0){
+        throw new Error('密码不能为空')
+      }
+      if(password.length < 6){
+        throw new Error('请输入6位以上的密码')
+      }
+      if(password.length > 15){
+        throw new Error('请输入6-15位的密码');
+      }
+    }catch(e){
+      this.state.handleShowMessage(e.message);
+      return false
+    }
+    this.setState({
+      stepIndex: stepIndex + 1
+    })
+  }
+
+  handleNext() {
+    const {
+      stepIndex
+    } = this.state;
+    switch (stepIndex) {
+      case 0:
+        this.verifyUsername()
+        break;
+      case 1:
+        this.verifyPassword()
+        break;
+      case 2:
+        this.handleSubmit()
+        break;
+      default:
+        return false
     }
   }
 
@@ -127,24 +179,11 @@ class RegisterPage extends React.Component {
 
   handleSubmit() {
     const {
-      username,
       password,
       passwordRepeat
     } = this.state;
 
     try{
-      if(username.length === 0){
-        throw new Error('用户名不能为空')
-      }
-      if(username.length > 10){
-        throw new Error('用户名不能超过10个字符')
-      }
-      if(password.length === 0){
-        throw new Error('密码不能为空')
-      }
-      if(password.length < 6){
-        throw new Error('请输入6位以上的密码')
-      }
       if(password !== passwordRepeat){
         throw new Error('两次输入的密码不一致，请重新确认')
       }
