@@ -1,11 +1,10 @@
 # www
 
-> serve for request
-
-* JS runtime environment: Node v4.4.7
+* JS runtime environment: Node ~~v4.4.7~~ v6.9.5
 * Using Koa
 * Equip with React, ES6 & babel 6
 * Build with webpack
+* MongoDB
 
 ## Build Setup
 
@@ -24,7 +23,7 @@ npm run debug
 npm run build
 
 # deploy and Initialized
-pm2 deploy production
+pm2 deploy production setup
 
 # deploy with pm2 after commit to github
 pm2 deploy production
