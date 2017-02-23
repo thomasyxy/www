@@ -243,7 +243,7 @@ class RegisterPage extends React.Component {
     ]
 
     return (
-      <Paper className="register-container" zDepth={1}>
+      <Paper className="register-container" zDepth={3}>
         <Stepper activeStep={stepIndex} style={{height: 40}}>
           {
             stepConfig.map((val, key) =>
