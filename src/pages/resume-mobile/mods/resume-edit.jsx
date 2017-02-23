@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 import marked from 'marked';
+import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
 import { ReactMde, ReactMdeCommands } from 'react-mde';
 import Paper from 'material-ui/Paper';
@@ -38,7 +39,7 @@ class ResumeEdit extends React.Component {
   constructor (props) {
     super(props);
     this.state = assign({}, props, {
-      resumeList: [],
+      resumeList: null,
       mdeValue: {text: "", selection: null},
       html: '',
       drawerVisible: false,
@@ -50,7 +51,8 @@ class ResumeEdit extends React.Component {
       newResumeName: '',
       curId: null,
       curTitle: null,
-      preview: false
+      preview: false,
+      initText: 'Hello World'
     });
     this.saveResume = this.saveResume.bind(this);
     this.refreshCode = this.refreshCode.bind(this);
@@ -75,21 +77,26 @@ class ResumeEdit extends React.Component {
   }
 
   loadResume(resume) {
-    if(resume){
-      if(resume._id !== this.state.curId){
-        this.props.showResume(resume);
-      }
-      let html = marked(resume.text)
-      this.setState({
-        mdeValue: {
-          text: resume.text,
-          selection: null
-        },
-        html: html,
-        curId: resume._id,
-        curTitle: resume.title
-      })
+    const {
+      defaultValue
+    } = this.state;
+
+    let curResume = resume || defaultValue;
+
+    if(curResume._id !== this.state.curId){
+      this.props.showResume(curResume);
     }
+    let html = marked(curResume.text)
+    this.setState({
+      mdeValue: {
+        text: curResume.text,
+        selection: null
+      },
+      html: html,
+      curId: curResume._id,
+      curTitle: curResume.title,
+      newResumeName: curResume.title
+    })
   }
 
   saveResume() {
@@ -117,7 +124,7 @@ class ResumeEdit extends React.Component {
     })
   }
 
-  createResume() {
+  createResume(title, text) {
     const {
       newResumeName,
       mdeValue,
@@ -131,8 +138,8 @@ class ResumeEdit extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        title: newResumeName,
-        text: mdeValue.text
+        title: title || newResumeName,
+        text: text || mdeValue.text
       })
     }).then((res) => {
       res.json().then((res) => {
@@ -218,6 +225,7 @@ class ResumeEdit extends React.Component {
           this.setState({
             resumeList: resumeList
           })
+          this.loadResume(resumeList[0]);
           handleShowMessage(res.message);
         }else{
           handleShowMessage(res.message || '接口异常');
@@ -250,15 +258,21 @@ class ResumeEdit extends React.Component {
   }
 
   setNewResume() {
+    const {
+      newResumeName,
+      initText
+    } = this.state;
     this.setState({
-      mdeValue: {text: "", selection: null},
-      html: '',
-      curId: null
+      mdeValue: {
+        text: initText,
+        selection: null
+      }
     })
+    this.createResume(newResumeName, initText);
   }
 
   handleToggleVisible() {
-    if(this.state.resumeList.length === 0){
+    if(!this.state.resumeList){
       this.getResumeList();
     }
     this.setState({
@@ -394,7 +408,7 @@ class ResumeEdit extends React.Component {
           onRequestChange={this.handleToggleVisible}>
           <List className="edit-resume-list" style={{paddingRight: 12}}>
             {
-              resumeList.length > 0 ? resumeList.map((val, key) =>
+              resumeList && resumeList.length > 0 ? resumeList.map((val, key) =>
                 <ListItem
                   className="edit-resume-item"
                   key={key}

@@ -38,7 +38,7 @@ const INTRO = `### MD简历箱项目
 
 2.使用的组件库为 [Material-UI](http://www.material-ui.com/#/)
 
-3.后端用 node.js + Koa 框架 + jade 模板引擎
+3.后端用 Node.js + Koa 框架 + jade 模板引擎
 
 4.使用 MongoDB 作为数据库
 
@@ -76,7 +76,7 @@ class ResumePage extends React.Component {
     }).then((res) => {
       res.json().then((res) => {
         if(res.success && res.data){
-          this.showResume(res.data[0] || this.state.defaultValue)
+          this.showResume(res.data[0])
         }else{
           this.setState({
             serverResult: false
@@ -88,7 +88,7 @@ class ResumePage extends React.Component {
 
   showResume(resume) {
     this.setState({
-      resume: resume
+      resume: resume || this.state.defaultValue
     })
   }
 
@@ -112,7 +112,8 @@ class ResumePage extends React.Component {
       resume,
       serverResult,
       snackbarVisible,
-      snackbarMessage
+      snackbarMessage,
+      defaultValue
     } = this.state;
 
     const TabConfig = [
@@ -122,7 +123,12 @@ class ResumePage extends React.Component {
       },
       {
         title: '简历编辑',
-        view: <ResumeEdit resume={resume} showResume={this.showResume} handleShowMessage={this.handleShowMessage} />
+        view: <ResumeEdit
+          resume={resume}
+          showResume={this.showResume}
+          handleShowMessage={this.handleShowMessage}
+          defaultValue={defaultValue}
+        />
       }
     ];
 
