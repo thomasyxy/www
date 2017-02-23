@@ -131,7 +131,10 @@ module.exports = {
         throw new Error('用户名请控制在1-10个字符内');
       }
       if(password.length < 6){
-        throw new Error('密码不能少于6位')
+        throw new Error('密码不能少于6位');
+      }
+      if(password.length > 15){
+        throw new Error('请输入6-15位的密码');
       }
     }catch(e){
       result.message = e.message;
