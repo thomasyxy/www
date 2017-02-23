@@ -75,7 +75,7 @@ class LoginPage extends React.Component {
   render() {
 
     return (
-      <Paper className="login-container" zDepth={1}>
+      <Paper className="login-container" zDepth={3}>
         <div className="input-group">
           <div className="input-name">
             <TextField
@@ -89,14 +89,14 @@ class LoginPage extends React.Component {
             <TextField
               className="custom-input"
               hintText=""
-              floatingLabelText="Password"
-              type="密码"
+              floatingLabelText="请输入密码"
+              type="password"
               onChange={this.handlePassword}
             />
           </div>
         </div>
         <div className="btn-group">
-          <RaisedButton label="Login" primary={true} onClick={this.handleClickLogin}/>
+          <RaisedButton label="登录" primary={true} onClick={this.handleClickLogin}/>
         </div>
       </Paper>
     );
