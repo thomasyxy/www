@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import assign from 'object-assign';
 import marked from 'marked';
-import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 
 import { ReactMde, ReactMdeCommands } from 'react-mde';
 import Paper from 'material-ui/Paper';
