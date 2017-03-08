@@ -8,6 +8,8 @@ module.exports = {
   cover: String,
   type: String,
   theme: String,
+  createDate: Date,
+  updateDate: Date,
   tag: [
     {
       name: String,

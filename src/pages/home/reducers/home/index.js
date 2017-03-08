@@ -5,7 +5,7 @@ import * as actions from '../../actions/home';
 // 对页面prop 数据进行管理
 const initialState = {
   navData: {},
-  easyList: []
+  eassyList: []
 };
 const defaultAction = {
   type: 'doNothing'
@@ -30,6 +30,6 @@ function loadInitData(state, action) {
 
 function loadContentData(state, action) {
   let nextState = Object.assign({}, state);
-  nextState.easyList = action.data;
+  nextState.eassyList = action.data;
   return nextState;
 }

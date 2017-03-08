@@ -1,0 +1,45 @@
+@import "~react-mde/lib/styles/react-mde.scss";
+@import "~font-awesome/css/font-awesome.css";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Microsoft YaHei';
+}
+
+#container{
+  height: 100vh;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#ta1{
+  position: absolute;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.create{
+  height: 100vh;
+  .react-mde{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .mde-text{
+      position: relative;
+    }
+    .mde-preview, .mde-help{
+      display: none;
+    }
+    .react-mde-dropdown{
+      z-index: 2;
+    }
+  }
+}
+
+.register-message{
+  text-align: center;
+}

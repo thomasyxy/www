@@ -10,16 +10,13 @@ export default class Content extends React.Component {
     super(props);
     this.loadContentData = this.loadContentData.bind(this);
     this.state = {
-      curPage: 1,
+      curPage: 0,
       loading: true
     }
   }
 
   componentWillMount() {
-    const {
-      curPage
-    } = this.state;
-    this.loadContentData(curPage);
+    this.loadContentData(this.state.curPage);
   }
 
   loadContentData(page) {
@@ -33,6 +30,10 @@ export default class Content extends React.Component {
         loading: false
       })
     })
+  }
+
+  openArticle(id) {
+
   }
 
   _renderList(list) {
@@ -58,7 +59,7 @@ export default class Content extends React.Component {
           </div>
         </CardMedia>
         <CardText>
-          <p className="content-text">{item.content}</p>
+          <p className="content-text" onClick={this.openArticle}>{item.content}</p>
         </CardText>
       </Card>
     </div>
