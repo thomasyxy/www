@@ -7,13 +7,12 @@ import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup';
 import { Layout, Header , Sidebar, Section, Footer } from 'fit-layout-global'
 
 import * as actions from '../../actions/home';
-import Utils from '../../../../utils';
 import './index.scss';
 
-// import Header from '../parts/header';
 import Content from '../parts/content';
 import Preload from '../components/preload';
 import Topbar from '../components/top-bar';
+import navData from '../../../config/nav';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,7 +30,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.loadInitData();
+    // this.loadInitData();
+    this.waitPreloadPlay(this.state.waitTime);
   }
 
   loadInitData() {
@@ -70,7 +70,7 @@ class App extends React.Component {
       sidebarVisible
     } = this.state;
     const {
-      easyList
+      eassyList
     } = this.props;
 
     return (
@@ -84,7 +84,7 @@ class App extends React.Component {
         <Section>
           <Content
             getData={this.props.getArticleList}
-            list={easyList}
+            list={eassyList}
           />
         </Section>
       </Layout>
@@ -95,10 +95,6 @@ class App extends React.Component {
     const {
       preloading
     } = this.state;
-
-    const {
-      navData
-    } = this.props;
 
     return (
       <ReactCSSTransitionGroup transitionName="preload" transitionEnterTimeout={500} transitionLeaveTimeout={500}>

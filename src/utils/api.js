@@ -18,6 +18,14 @@ const GET_ARTICLE_LIST = {
   type: 'GET'
 }
 
+const GET_ARTICLE = {
+  local: '/mock/data/get-article.json',
+  url: '/blog/getArticle',
+  type: 'GET'
+}
+
+
+
 
 
 

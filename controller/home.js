@@ -15,9 +15,9 @@ module.exports = {
   },
 
   center: function *(next){
-    if(this.session.token){
-      this.render('lab/resume-mobile', {
-        title: '移动端简历'
+    if(this.session.token && this.session.username === 'thomasyxy'){
+      this.render('center', {
+        title: '文章上传'
       })
     }else{
       this.render('login', {
@@ -33,141 +33,6 @@ module.exports = {
       "success": true,
       "message": 0,
       "data": {
-        "navData": {
-          "list" : [
-            {
-              "title": "博客",
-              "url": "111",
-              "desc": "2333333333"
-            },
-            {
-              "title": "github",
-              "url": "111",
-              "desc": "2333333333"
-            },
-            {
-              "title": "实验室",
-              "list": [
-                {
-                  "title": "游戏",
-                  "list": [
-                    {
-                      "title": "小游戏",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    }
-                  ],
-                  "default": false,
-                  "url": "",
-                  "desc": "2333333333"
-                },
-                {
-                  "title": "音乐",
-                  "list": [
-                    {
-                      "title": "小游戏",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    }
-                  ],
-                  "default": false,
-                  "url": "",
-                  "desc": "2333333333"
-                },
-                {
-                  "title": "电影",
-                  "list": [
-                    {
-                      "title": "小游戏",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    }
-                  ],
-                  "default": false,
-                  "url": "",
-                  "desc": "2333333333"
-                },
-                {
-                  "title": "开发",
-                  "list": [
-                    {
-                      "title": "小游戏",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    },
-                    {
-                      "title": "聊天室",
-                      "url": "1112",
-                      "desc": "2333333333"
-                    }
-                  ],
-                  "default": false,
-                  "url": "",
-                  "desc": "2333333333"
-                },
-                {
-                  "title": "更多",
-                  "list": [],
-                  "default": false,
-                  "url": "aaa",
-                  "desc": "2333333333"
-                }
-              ],
-              "url": "",
-              "desc": "2333333333"
-            }
-          ]
-        }
       }
     }
 
