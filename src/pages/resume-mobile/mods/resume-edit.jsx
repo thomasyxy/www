@@ -397,7 +397,7 @@ class ResumeEdit extends React.Component {
         </div>
         <div className="edit-option">
           <RaisedButton label="简历箱" primary={true} onTouchTap={this.handleToggleVisible} />
-          <RaisedButton label="保存" onClick={ curId ? this.saveResume : this.createResume } />
+          <RaisedButton label="保存123" onClick={ curId ? this.saveResume : this.createResume } />
         </div>
         <Drawer
           className="edit-drawer"
