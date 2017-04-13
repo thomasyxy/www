@@ -106,9 +106,10 @@ const isDebug = Utils.dataFn.hasParam('debug')
 
 const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
 
-if(!isDebug) {
-  isBuild || !isDev ? BuildStep() : DevStep()
-}
+// if(!isDebug) {
+//   isBuild || !isDev ? BuildStep() : DevStep()
+// }
+ BuildStep()
 
 // session
 app.keys = ['some secret hurr'];
