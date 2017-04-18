@@ -32,6 +32,8 @@ module.exports = function(app){
   router.post('/resume/save', ctrl.resume.save);
   router.post('/resume/create', ctrl.resume.create);
 
+  router.get('/blog', ctrl.resume.index);
+
   router.post('/blog/create', ctrl.blog.create);
 
 
