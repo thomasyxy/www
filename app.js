@@ -61,7 +61,7 @@ const DevStep = function(){
   const compiler = webpack(webpackConfig)
   const devMiddleware = require("koa-webpack-dev-middleware")(compiler, {
     publicPath: webpackConfig.output.publicPath,
-    static: {
+    stats: {
       colors: true,
       chunks: false
     }
@@ -94,7 +94,7 @@ if(!isDebug) {
 // BuildStep()
 
 // session
-app.keys = ['some secret hurr'];
+app.keys = ['some secret hurr']
 var CONFIG = {
   key: 'userid', /** (string) cookie key (default is koa:sess) */
   maxAge: 86400000, /** (number) maxAge in ms (default is 1 days) */
@@ -102,7 +102,7 @@ var CONFIG = {
   httpOnly: true, /** (boolean) httpOnly or not (default true) */
   signed: true, /** (boolean) signed or not (default true) */
 };
-app.use(session(CONFIG, app));
+app.use(session(CONFIG, app))
 
 
 //接口代理
