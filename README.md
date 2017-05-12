@@ -13,7 +13,10 @@
 npm install
 
 # serve at localhost:3000
+<<<<<<< HEAD
 # please launch mongodb
+=======
+>>>>>>> ed127af5ed46a2ac2a54d350192fddd5162d7b0c
 npm run dev
 
 # debug with node-inspector at localhost:3000
