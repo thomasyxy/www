@@ -16,7 +16,6 @@ const webpack = require('webpack')
 const os = require('os')
 const network = os.networkInterfaces()
 const path = require('path')
-const ora = require('ora')
 const staticCache = require('koa-static-cache')
 const Utils = require('./utils')
 
@@ -54,26 +53,8 @@ const localUri = 'http://127.0.0.1'
 const app = new koa();
 
 const BuildStep = function(){
-  var spinner = ora('building for production...')
-  spinner.start()
-
-  // var assetsPath = path.join(G.C.assetsRoot, G.C.assetsSubDirectory)
-  // console.log(assetsPath)
-  // rm('-rf', assetsPath)
-  // mkdir('-p', assetsPath)
-  // cp('-R', 'static/*', assetsPath)
-
-  webpack(webpackConfig, function (err, stats) {
-    spinner.stop()
-    if (err) throw err
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    }) + '\n')
-  })
+  console.log('building...')
+  webpack(webpackConfig)
 }
 
 const DevStep = function(){
@@ -104,13 +85,13 @@ const isBuild = Utils.dataFn.hasParam('build')
 
 const isDebug = Utils.dataFn.hasParam('debug')
 
-// const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
+const webpackConfig = require('./webpack.config')[ (isDev && !isBuild) ? 'dev' : 'prod' ]
 
-// if(!isDebug) {
-//   isBuild || !isDev ? BuildStep() : DevStep()
-// }
-const webpackConfig = require('./webpack.config')['prod']
-BuildStep()
+if(!isDebug) {
+  isBuild || !isDev ? BuildStep() : DevStep()
+}
+// const webpackConfig = require('./webpack.config')['prod']
+// BuildStep()
 
 // session
 app.keys = ['some secret hurr'];
