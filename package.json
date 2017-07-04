@@ -19,7 +19,7 @@
     "html-webpack-plugin": "^2.24.1",
     "jwt-simple": "^0.5.1",
     "marked": "^0.3.6",
-    "material-ui": "^0.17.0",
+    "material-ui": "^1.0.0-alpha.20",
     "merge": "^1.2.0",
     "object-assign": "^4.1.1",
     "ora": "^0.3.0",
@@ -61,7 +61,6 @@
     "co-body": "^4.2.0",
     "commander": "^2.9.0",
     "fit-button": "^3.1.59",
-    "node-sass": "^3.11.2",
     "koa": "^1.2.5",
     "koa-convert": "^1.2.0",
     "koa-jade": "^2.1.0",
@@ -70,9 +69,7 @@
     "koa-session": "^3.4.0",
     "koa-static-cache": "^3.1.7",
     "koa-webpack-dev-middleware": "^1.2.2",
-    "koa-webpack-hot-middleware": "^1.0.3",
-    "sass-loader": "^4.0.2",
-    "webpack": "^1.13.3"
+    "koa-webpack-hot-middleware": "^1.0.3"
   },
   "repository": {
     "type": "git",
