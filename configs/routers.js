@@ -36,6 +36,7 @@ module.exports = function(app){
 
   router.post('/blog/create', ctrl.blog.create);
 
+  router.get('/bookstore', ctrl.book.index);
 
   return router.middleware();
 }

@@ -11,7 +11,8 @@ const webpackConfigBase = {
     index: path.resolve(__dirname, './src/pages/home/index.js'),
     center: path.resolve(__dirname, './src/pages/center/index.js'),
     login: path.resolve(__dirname, './src/pages/login/index.js'),
-    resume_mobile: path.resolve(__dirname, './src/pages/resume-mobile/index.js')
+    resume_mobile: path.resolve(__dirname, './src/pages/resume-mobile/index.js'),
+    bookstore: path.resolve(__dirname, './src/pages/bookstore/index.js')
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
