@@ -1,7 +1,6 @@
 import React from 'react';
 import Loading from 'fit-loading';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 
 require('./index.scss');
 

@@ -7,7 +7,7 @@ import { ReactMde, ReactMdeCommands } from 'react-mde';
 import Paper from 'material-ui/Paper';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Button from 'material-ui/Button';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -427,9 +427,9 @@ class ResumeEdit extends React.Component {
               />
             }
           </List>
-          <FloatingActionButton className="edit-resume-add" onClick={() => { this.handleDialogOpen(null, content) }}>
+          <Button fab className="edit-resume-add" onClick={() => { this.handleDialogOpen(null, content) }}>
             <ContentAdd />
-          </FloatingActionButton>
+          </Button>
           <div className="drawer-toggle" onClick={this.handleToggleVisible}>
             <ArrowUp className="toggle-icon"/>
           </div>
