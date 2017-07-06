@@ -4,7 +4,7 @@ import assign from 'object-assign';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 
 import 'whatwg-fetch';
 
@@ -96,7 +96,7 @@ class LoginPage extends React.Component {
           </div>
         </div>
         <div className="btn-group">
-          <RaisedButton label="登录" primary={true} onClick={this.handleClickLogin}/>
+          <Button raised label="登录" primary={true} onClick={this.handleClickLogin}/>
         </div>
       </Paper>
     );

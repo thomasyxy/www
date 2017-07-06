@@ -4,7 +4,7 @@ import assign from 'object-assign';
 
 import { ReactMde, ReactMdeCommands } from 'react-mde';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import Snackbar from 'material-ui/Snackbar';
 
 import 'whatwg-fetch'
@@ -115,7 +115,7 @@ class Create extends React.Component {
           floatingLabelText="请输入文章封面链接"
           onChange={this.setCover}
         />
-        <RaisedButton label="保存" onClick={this.createArticle} />
+        <Button label="保存" onClick={this.createArticle} />
         <ReactMde
           textareaId="ta1"
           textareaName="ta1"
