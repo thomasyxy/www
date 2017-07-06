@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -328,11 +328,13 @@ class ResumeEdit extends React.Component {
     } = this.state;
 
     const actions = [
-      <RaisedButton
+      <Button
+        raised
         label="取消"
         onTouchTap={this.handleDialogClose}
       />,
-      <RaisedButton
+      <Button
+      raised
         label="确定"
         primary={dialogAllow}
         disabled={!dialogAllow}
@@ -396,8 +398,8 @@ class ResumeEdit extends React.Component {
           </div>
         </div>
         <div className="edit-option">
-          <RaisedButton label="简历箱" primary={true} onTouchTap={this.handleToggleVisible} />
-          <RaisedButton label="保存" onClick={ curId ? this.saveResume : this.createResume } />
+          <Button raised label="简历箱" primary={true} onTouchTap={this.handleToggleVisible} />
+          <Button raised label="保存" onClick={ curId ? this.saveResume : this.createResume } />
         </div>
         <Drawer
           className="edit-drawer"

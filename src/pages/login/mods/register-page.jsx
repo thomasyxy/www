@@ -7,7 +7,7 @@ import 'whatwg-fetch';
 import Paper from 'material-ui/Paper';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from 'material-ui/Button';
 
 class RegisterPage extends React.Component {
   constructor (props) {
@@ -260,13 +260,15 @@ class RegisterPage extends React.Component {
         </div>
         <div className="register-action">
           {
-            stepIndex !== 0 ? <RaisedButton
+            stepIndex !== 0 ? <Button
+              raised
               className="register-back"
               label="上一步"
               onTouchTap={this.handleBack}
             /> : ''
           }
-          <RaisedButton
+          <Button
+            raised
             className="register-next"
             label={stepConfig[stepIndex].ButtonText}
             primary={true}
