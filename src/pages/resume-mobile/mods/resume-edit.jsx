@@ -8,7 +8,6 @@ import Paper from 'material-ui/Paper';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
 import Button from 'material-ui/Button';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
