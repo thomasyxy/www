@@ -9,7 +9,6 @@ class Door extends React.Component {
   }
 
   render() {
-
     return <div className="door-page">
       welcome to bookstore
     </div>
